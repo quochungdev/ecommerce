@@ -1,0 +1,26 @@
+{
+    "infoProduct": {
+        "21": {
+            "productId": 21,
+            "qty": 1,
+            "price": 10
+        },
+        "22": {
+            "productId": 22,
+            "qty": 1,
+            "price": 10
+        }
+    },
+    "voucher": {
+        "id": 4,
+        "quantity": 100,
+        "name": "khuyen mai 3",
+        "code": "KM1",
+        "value": 10,
+        "isDeleted": 0
+    },
+    "payment": {
+        "id": 5,
+        "name": "Momo"
+    }
+}

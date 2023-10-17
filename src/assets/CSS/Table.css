@@ -1,0 +1,11 @@
+.table-custom { 
+  background: white;
+  border: 2px solid white ;
+  border-radius: 15px;
+  border-collapse: inherit !important
+}
+
+/* Đặt màu nền cho các hàng riêng lẻ */
+.table-custom thead:nth-child(odd) {
+  background-color: #f2f2f2 !important; /* Màu nền cho các hàng chẵn */
+}
