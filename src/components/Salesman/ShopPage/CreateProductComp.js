@@ -17,11 +17,17 @@ export default function CreateProductComp() {
   const [qty, setQty] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
-
+  const [files, setFiles] = useState([]);
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
   };
+
+  const handleFileChange = (e) => {
+    const selectedImages = e.target.files;
+    setFiles(selectedImages);
+  };
+
   const loadCategories = async () => {
     try {
       let res = await Apis.get(endpoints["categories"]);
@@ -41,10 +47,11 @@ export default function CreateProductComp() {
     formData.append("price", price);
     formData.append("qty", qty);
     formData.append("thumbnail", image);
-    formData.append("file", image);
     formData.append("category_id", parseInt(selectedSubCategory));
-    // formData.append("shopId", shop.id);
-    console.log(typeof parseInt(selectedSubCategory));
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append(`file`, files[i]);
+    }
 
     if (!name || !desc || !price || !qty || !image || !selectedSubCategory) {
       toastError("Thêm thất bại");
@@ -142,7 +149,21 @@ export default function CreateProductComp() {
           </Form.Group>
           <Form.Group className="mb-3 flex">
             <Form.Label className="w-1/6 text-center text-xl font-semibold">
-              Ngành hàng chính
+              Hình ảnh phụ
+            </Form.Label>
+            <Form.Control
+              className="!w-5/6"
+              type="file"
+              name="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              placeholder="Chọn file"
+              multiple
+            />
+          </Form.Group>
+          <Form.Group className="mb-3 flex">
+            <Form.Label className="w-1/6 text-center text-xl font-semibold">
+              Danh mục gốc
             </Form.Label>
             <Form.Control
               value={selectedCategory}
@@ -151,7 +172,7 @@ export default function CreateProductComp() {
               defaultValue="Chọn ngành hàng"
               className="!w-5/6"
             >
-              <option value="">Chọn ngành hàng chính</option>
+              <option value="">Chọn danh mục gốc</option>
               {categoryMain.map((cate) => (
                 <option key={cate.id} value={cate.id}>
                   {cate.name}
@@ -161,7 +182,7 @@ export default function CreateProductComp() {
           </Form.Group>
           <Form.Group className="mb-3 flex">
             <Form.Label className="w-1/6 text-center text-xl font-semibold">
-              Ngành hàng phụ
+              Danh mục phụ
             </Form.Label>
             <Form.Control
               value={selectedSubCategory}
@@ -169,7 +190,7 @@ export default function CreateProductComp() {
               as="select"
               className="!w-5/6"
             >
-              <option value="">Chọn ngành hàng phụ</option>
+              <option value="">Chọn Danh mục phụ</option>
               {subCategory.map((cate) => (
                 <option key={cate.id} value={cate.id}>
                   {cate.name}

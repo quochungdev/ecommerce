@@ -36,7 +36,7 @@ export default function ModalSelectAddress({ onAddressSelected }) {
   return (
     <>
       <Button
-        className="w-56 h-12 ml-5 mr-5"
+        className="w-56 h-12 mt-2"
         variant="dark"
         onClick={handleShow}
       >

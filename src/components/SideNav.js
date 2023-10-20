@@ -36,9 +36,9 @@ export default function SideNav() {
   ];
   return (
     <>
-      <div className="bg-white shadow-md w-1/6 min-h-screen">
-        <div className="text-center p-3">
-          <h3 className="">Kênh người bán</h3>
+      <div className="bg-orange-100 border m-3 shadow-md w-1/6 min-h-screen">
+        <div className="bg-orange-500 text-center p-3">
+          <h3 className="text-white">Hồ sơ của tôi</h3>
         </div>
 
         <hr className="text-white border-solid border" />

@@ -19,7 +19,7 @@ function CartDropdown() {
         variant="none"
         id="dropdown-basic"
       >
-        <MDBIcon size="2x" fas icon="shopping-cart relative">
+        <MDBIcon size="2x" className="transition-all duration-200 hover:!bg-gray-300 rounded-md " fas icon="shopping-cart relative">
           <span
             className="text-notifi notification text-xs absolute top-0 
                         -right-3 z-20 text-white font-semibold border-1

@@ -50,6 +50,8 @@ export function CartProvider({ children }) {
             : product
         );
 
+      case "REMOVE_FROM_CART":
+        return state.filter((product) => product.id !== action.payload.id);
       // Các case khác (ví dụ: REMOVE_FROM_CART) có thể được thêm ở đây
       default:
         return state;

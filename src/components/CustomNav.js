@@ -25,7 +25,7 @@ export default function CustomNav({ nav }) {
         </button>
       </Link>
       <ul
-        class="z-30 bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
+        class="z-30 px-0 bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
                                         transition duration-150 ease-in-out origin-top min-w-32"
       >
         {nav.parent
@@ -63,7 +63,7 @@ function LiNotNull({ nav }) {
         </span>
       </button>
       <ul
-        class="bg-white border rounded-sm absolute top-0 right-0 
+        class="bg-white px-0 border rounded-sm absolute top-0 right-0 
                                         transition duration-150 ease-in-out origin-top-left
                                         min-w-32
                                         "

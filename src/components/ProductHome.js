@@ -27,53 +27,33 @@ export default function ProductHome() {
     return resultArray;
   }, []);
   return (
-    <div className="mt-5 container h-96 !px-0">
+    <div style={{ height: "480px" }} className="mt-5 container !w-2/3 h-full !px-0">
       <div className="bg-white text-orange-500 border w-full h-1/5 p-3">
         <h2>SẢN PHẨM BÁN CHẠY NHẤT</h2>
       </div>
-      <div className=" w-full h-full">
+      <div className="w-auto h-full bg-white">
         <Carousel slide={false}>
-        {chunkedProducts.map((chunkProd) => (
-          <div className="border shadow-md flex h-full items-center justify-center ">
-            <div className="w-full h-full flex flex-wrap justify-between ">
-              {chunkProd.map((product) => (
-                <div className="w-1/6 h-1/2 border shadow-md ">
-                  <Link
-                    key={product.id}
-                    to={`/chi-tiet-san-pham/${product.id}`} // Sử dụng /san-pham/:id
-                    className="!text-black decoration-transparent"
-                  >
-                    <img className="w-full h-4/5" src={product.thumbnail} />
-                    <div className="w-full h-1/5 font-semibold px-2 pt-2">
-                      {product.name}
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-              ))}
-
-        </Carousel>
-
-        {/* <Carousel slide={false}>
-          {products.map((product) => (
-            <ul>
-              <div className="bg-red-400 w-1/6 h-1/2 border shadow-md ">
-                <Link
-                  key={product.id}
-                  to={`/san-pham/${product.id}`} // Sử dụng /san-pham/:id
-                  className="!text-black decoration-transparent"
-                >
-                  <img className="w-full h-4/5" src={product.thumbnail} />
-                  <div className="w-full h-1/5 font-semibold px-2 pt-2">
-                    {product.name}
+          {chunkedProducts.map((chunkProd) => (
+            <div className="border shadow-md flex h-auto items-center justify-center ">
+              <div className=" w-full h-full flex flex-wrap justify-between ">
+                {chunkProd.map((product) => (
+                  <div className="w-1/6 h-1/2 border shadow-md">
+                    <Link
+                      key={product.id}
+                      to={`/chi-tiet-san-pham/${product.id}`} // Sử dụng /san-pham/:id
+                      className="!text-black decoration-transparent"
+                    >
+                      <img className="w-full h-4/5" src={product.thumbnail} />
+                      <div className="w-full h-1/5 font-semibold px-2 pt-2">
+                        {product.name}
+                      </div>
+                    </Link>
                   </div>
-                </Link>
+                ))}
               </div>
-            </ul>
+            </div>
           ))}
-        </Carousel> */}
+        </Carousel>
       </div>
     </div>
   );

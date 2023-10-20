@@ -26,10 +26,13 @@ export default function ProductDetails() {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [selectedstar, setSelectedStar] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); // State to track selected image
+
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
   };
+
   const createReview = async () => {
     const formData = new FormData();
     formData.append("content", content);
@@ -63,6 +66,7 @@ export default function ProductDetails() {
       console.log(ex);
     }
   };
+
   const { dispatch } = useCart();
   const addToCart = () => {
     dispatch({ type: "ADD_TO_CART", payload: productDetail });
@@ -74,27 +78,36 @@ export default function ProductDetails() {
     loadReviews();
   }, []);
 
- 
-
+  //  console.log( productDetail.imageSet.map(image => image.imageUrl))
   return (
     <div className="container-background">
       <ToastContainer />
       <div className="container bg-white h-auto mt-3 shadow-md">
         <div className="w-full h-full flex">
           <div className="h-full flex flex-col w-2/5 justify-center ">
-            <div className=" h-full flex justify-center">
-              <img className="" src={productDetail.thumbnail} />
-            </div>
-            <div className=" h-full flex mt-3">
-              <div>
-                <img className="pr-3" src={productDetail.thumbnail} />
+              <div className="w-full h-full flex justify-center">
+                <img
+                  className="w-full"
+                  src={selectedImage || productDetail.thumbnail} // Use the selected image or thumbnail
+                />
               </div>
-              <div>
-                <img className="pr-3" src={productDetail.thumbnail} />
-              </div>
-              <div>
-                <img className="pr-3" src={productDetail.thumbnail} />
-              </div>
+            <div className="h-36 flex mt-3">
+              {/* {productDetail.imageSet &&
+                productDetail.imageSet.map((s, index) => (
+                  <div key={index} className="relative border w-1/4 mr-3">
+                    <img className="h-full" src={s.imageUrl} />
+                  </div>
+                ))} */}
+              {productDetail.imageSet &&
+                productDetail.imageSet.map((s, index) => (
+                  <div
+                    key={index}
+                    className="relative border w-1/4 mr-3"
+                    onClick={() => setSelectedImage(s.imageUrl)} // Handle the click event
+                  >
+                    <img className="h-full" src={s.imageUrl} />
+                  </div>
+                ))}
             </div>
           </div>
           <div className="w-3/5 h-full p-3">
@@ -152,8 +165,6 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
-
-      
 
       <div className="container bg-white h-auto mt-5 shadow-md">
         <div className="w-full h-full p-3 ">
@@ -254,7 +265,10 @@ export default function ProductDetails() {
                               </p>
                               <p>{review.content}</p>
                               <div>
-                                <img className="w-2/12 h-auto" src={review.imageUrl} />
+                                <img
+                                  className="w-2/12 h-auto"
+                                  src={review.imageUrl}
+                                />
                               </div>
                             </div>
                           </MDBCardBody>

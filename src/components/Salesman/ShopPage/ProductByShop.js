@@ -18,7 +18,7 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
       console.log(ex);
     }
   };
-
+  console.log(products);
   useEffect(() => {
     loadProducts();
   }, [status]);

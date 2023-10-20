@@ -3,6 +3,7 @@ import { useCart } from "../reducers/CartContext";
 import minusIcon from "../assets/image/minus.png";
 import plusIcon from "../assets/image/plus.png";
 import cartIcon from "../assets/image/shopping-cart.png";
+import deleteIcon from "../assets/image/delete.png";
 import { Button, Image } from "react-bootstrap";
 import Apis, { authApi, endpoints } from "../configs/Apis";
 import { MyUserContext } from "../App";
@@ -41,6 +42,7 @@ export default function CartPage() {
       quantity: newQuantity,
       total: newQuantity * newPrice,
     };
+    console.log(updateProduct);
     dispatch({ type: "UPDATE_CART", payload: updateProduct });
   };
 
@@ -67,7 +69,6 @@ export default function CartPage() {
     try {
       let res = await authApi().get(endpoints["user_address"]);
       setUserAddress(res.data);
-      console.log(res.data);
     } catch (ex) {
       console.log(ex);
     }
@@ -108,8 +109,33 @@ export default function CartPage() {
       console.log(error);
     }
   };
-  let totalCart = selectedVoucherId && (totalAmount - (totalAmount * (selectedVoucherId.value/100)))
 
+  // const handleRemoveCartProduct = (productId) => {
+  //   const productIndex = cart.find((c) => c === productId);
+  //   console.log(cart.filter((product) => product.id !== productId));
+  //   if (productIndex !== -1) {
+  //     // Create a copy of the current cart array without the product to be removed
+  //     const updatedCart = [...cart];
+  //     updatedCart.splice(productIndex, 1);
+
+  //     // Update the cart state
+  //     dispatch({ type: "UPDATE_CART", payload: updatedCart });
+
+  //     // Update localStorage
+  //     localStorage.setItem(`cart_${user.id}`, JSON.stringify(updatedCart));
+
+  //     toastSuccess("Đã xóa sản phẩm");
+  //   }
+  // };
+  const handleRemoveFromCart = (productId) => {
+    // Call the dispatch function with the "REMOVE_FROM_CART" action and the product's id as payload
+    dispatch({ type: "REMOVE_FROM_CART", payload: { id: productId } });
+    toastSuccess("Đã xóa sản phẩm");
+  };
+
+  let totalCart =
+    selectedVoucherId &&
+    totalAmount - totalAmount * (selectedVoucherId.value / 100);
   return (
     <>
       <div className="bg-orange-300 h-20 flex items-center ">
@@ -129,15 +155,13 @@ export default function CartPage() {
               {selectedAddress ? (
                 `${selectedAddress.address}, ${selectedAddress.ward}, ${selectedAddress.city}`
               ) : (
-                <div className="text-red-500">
-                  Bạn chưa chọn địa chỉ nhận hàng
-                </div>
+                <div className="text-xl">Bạn chưa chọn địa chỉ nhận hàng</div>
               )}
             </div>
             <ModalSelectAddress onAddressSelected={handleAddressSelected} />
           </div>
         </div>
-        <div className="container mt-3 bg-white flex justify-between border">
+        <div className="container mt-3 bg-white flex justify-around border">
           <div className="p-4 text-xl font-bold">Sản Phẩm</div>
           <div className="p-4 text-xl font-bold">Đơn Giá</div>
           <div className="p-4 text-xl font-bold">Số Lượng</div>
@@ -147,16 +171,18 @@ export default function CartPage() {
         <div className="mt-3">
           {cart.length > 0 ? (
             cart.map((c) => (
-              <div className="container bg-white flex justify-between flex-wrap border">
+              <div className="container bg-white flex justify-around border">
                 <>
-                  <div className="p-4 text-xl font-bold flex w-1/5">
+                  <div className="p-4 text-xl font-semibold flex w-1/5">
                     <div>
                       <img className="h-3/5" src={c.thumbnail} />
                     </div>
                     <div className="">{c.name}</div>
                   </div>
-                  <div className="p-4 text-xl font-bold w-1/5">{c.price}</div>
-                  <div className="p-4 text-xl font-bold w-1/5 flex h-full">
+                  <div className="p-4 text-xl text-center font-semibold w-1/5">
+                    ${c.price}
+                  </div>
+                  <div className="p-4 text-xl font-semibold w-1/5 flex h-full">
                     <Button
                       onClick={() => handleDecrease(c.id)}
                       className="w-1/5 bg-white border"
@@ -164,7 +190,7 @@ export default function CartPage() {
                       <img src={minusIcon} />
                     </Button>
                     <input
-                      className="w-1/5 border text-center"
+                      className="w-2/5 border text-center"
                       value={c.quantity}
                       type="number"
                       id="quantity"
@@ -179,8 +205,20 @@ export default function CartPage() {
                       <img src={plusIcon} />
                     </Button>
                   </div>
-                  <div className="p-4 text-xl font-bold w-1/5">{c.total}</div>
-                  <div className="p-4 text-xl font-bold w-1/5">Thao Tác</div>
+                  <div className="p-4 text-xl text-center text-red-500 font-semibold w-1/5">
+                    ${c.total}
+                  </div>
+                  <div className="p-4 text-xl text-center font-bold w-1/5">
+                    <Button
+                      className="w-24 ml-5 mr-5 p-3 !bg-red-600 !border-none transition-all duration-200 hover:!bg-red-400"
+                      onClick={() => handleRemoveFromCart(c.id)}
+                    >
+                      <div className="flex">
+                        <img className="w-1/3" src={deleteIcon} />
+                        <span className="pl-2 w-2/3 font-semibold">Xóa</span>
+                      </div>
+                    </Button>
+                  </div>
                 </>
               </div>
             ))
@@ -196,9 +234,10 @@ export default function CartPage() {
             {vouchers.map((voucher) => (
               <Button
                 variant="none"
-                className={`p-4 mx-3 text-xl text-black bg-red-400 !font-bold !border !border-red-500 flex ${
+                className={`p-4 mx-3 text-xl text-black bg-red-400 !font-bold !border !border-red-500 flex
+                transition-all duration-200 hover:!bg-red-400 ${
                   selectedVoucherId?.id === voucher.id
-                    ? " !bg-yellow-500  !border"
+                    ? " !bg-red-500  !border"
                     : ""
                 }`}
                 onClick={() => setSelectedVoucherId(voucher)}
@@ -210,7 +249,7 @@ export default function CartPage() {
         </div>
         <div className="container mt-3 bg-white  border flex flex-col">
           <div className="flex">
-            <div className="px-4 py-2 text-2xl font-semibold  ">Tổng tiền: </div>
+            <div className="px-4 py-2 text-2xl font-semibold  ">Tổng tiền:</div>
             <div className=" py-2 text-2xl font-semibold  text-red-600">
               ${totalAmount}
             </div>
@@ -234,9 +273,10 @@ export default function CartPage() {
             {payments.map((p) => (
               <Button
                 variant="none"
-                className={`p-4 mx-3 text-xl text-black bg-red-400 !font-bold !border !border-red-500 flex ${
+                className={`p-4 mx-3 text-xl text-black bg-red-400 !font-bold !border !border-red-500 flex
+                transition-all duration-200 hover:!bg-red-400 ${
                   selectedPaymentId?.id === p.id
-                    ? "!bg-yellow-500  !border "
+                    ? "!bg-red-500  !border "
                     : ""
                 }`}
                 onClick={() => {

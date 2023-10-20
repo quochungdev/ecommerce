@@ -68,7 +68,7 @@ export const BarChartMonth = () => {
           </Button>
         </div>
       </div>
-      <h2 style={{ textAlign: "center" }}>Sales</h2>
+      <h3 className="mt-4" style={{ textAlign: "center" }}>Biểu đồ tổng doanh thu sản phẩm theo tháng</h3>
       <Scatter
         data={{
           labels: stats.map((data) => `Tháng ${data.odMonth}`),

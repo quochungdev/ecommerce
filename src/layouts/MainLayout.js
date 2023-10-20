@@ -14,9 +14,8 @@ import ProductDetails from "../components/ProductDetails";
 import { CartProvider } from "../reducers/CartContext";
 import CartPage from "../components/CartPage";
 import PersonalInfo from "../components/UserInFo/PersonalInfo";
-import Paypal from "../components/PayPal";
 import PaymentSuccess from "../components/PaymentSuccess";
-import Chat from "../components/Chat/Chat";
+import Footer from "../pages/Footer";
 
 export const UserShopContext = createContext();
 
@@ -62,7 +61,6 @@ export default function MainLayout({ searchKeyword, handleSearch }) {
               }
             />
           </Routes>
-          {user ? <Chat /> : ""}
         </UserShopContext.Provider>
       </CartProvider>
     </>
