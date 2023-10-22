@@ -9,6 +9,7 @@ export const endpoints = {
     "signin": `/api/signin/`,
     "register": `/api/register/`,
     "current-user": `/api/user/profile/`,
+    "user": `/api/admin/users/`,
 
     "categories":  `/api/categories/`,
     "create_category":  `/api/admin/create_category/`,
@@ -33,8 +34,14 @@ export const endpoints = {
     "update_product": (productId) => `/api/shop/update_product/${productId}/`,
 
     "vouchers":  `/api/vouchers/`,
+    "create_voucher": `/api/admin/create_voucher/`,
+    "update_voucher":   (id) => `/api/admin/update_voucher/${id}/`,
+    "delete_voucher": (id) => `/api/admin/delete_voucher/${id}/`,
 
     "payments":  `/api/payments/`,
+    "create_payment": `/api/admin/create_payment/`,
+    "update_payment":   (id) => `/api/admin/update_payment/${id}/`,
+    "delete_payment": (id) => `/api/admin/delete_payment/${id}/`,
 
     "order_pay": `/api/pay/`,
     "order_shop": (status) => `/api/shop/orders/?status=${status}`,

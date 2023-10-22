@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Apis, { authApi, endpoints } from "../configs/Apis";
-import { Button, FloatingLabel, Form, Image } from "react-bootstrap";
+import { Button, Carousel, CarouselItem, FloatingLabel, Form, Image } from "react-bootstrap";
 import { useCart } from "../reducers/CartContext";
 import { toastError, toastSuccess } from "./Toast";
 import { ToastContainer } from "react-toastify";
@@ -31,6 +31,12 @@ export default function ProductDetails() {
   const [selectedImage, setSelectedImage] = useState(null); // State to track selected image
   const [showMore, setShowMore] = useState({});
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  // const groupSize = 4; // Số sản phẩm trên mỗi item
+  // const productGroups = [];
+  // for (let i = 0; i < productDetail.imageSet.length; i += groupSize) {
+  //   productGroups.push(productDetail.imageSet.slice(i, i + groupSize));
+  // }
+
   const toggleShowMore = (prodId) => {
     setShowMore((prev) => ({
       ...prev,
@@ -87,8 +93,6 @@ export default function ProductDetails() {
     }
   };
 
-  console.log(productDetail);
-
   let subImageArray = [];
 
   if (productDetail.imageSet && Array.isArray(productDetail.imageSet)) {
@@ -97,6 +101,16 @@ export default function ProductDetails() {
       ...productDetail.imageSet.map((i) => i.imageUrl),
     ];
   }
+  const chunkedProducts = subImageArray.reduce((resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / 4);
+
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = []; // Bắt đầu một phần con mới nếu cần
+    }
+
+    resultArray[chunkIndex].push(item);
+    return resultArray;
+  }, []);
 
   const { cart, dispatch } = useCart();
   const addToCart = () => {
@@ -128,7 +142,6 @@ export default function ProductDetails() {
     loadReviews();
   }, []);
 
-  //  console.log( productDetail.imageSet.map(image => image.imageUrl))
   return (
     <div className="container-background mb-14">
       <ToastContainer />
@@ -141,38 +154,34 @@ export default function ProductDetails() {
                 src={selectedImage || productDetail.thumbnail} // Use the selected image or thumbnail
               />
             </div>
-            <div className="h-36 flex mt-3 mb-5">
-              {/* <img
-                onClick={() => setSelectedImage(productDetail.thumbnail)}
-                className={`relative border w-1/4 mr-3 cursor-pointer ${
-                  selectedImageIndex === 0
-                    ? `border-5 border-solid border-orange-600`
-                    : ""
-                }`}
-                src={productDetail.thumbnail}
-                alt=""
-              /> */}
-              {productDetail.imageSet &&
-                subImageArray.map((s, index) => (
-                  <>
-                    <div
-                      key={index}
-                      className="relative border w-1/4 mr-3 cursor-pointer"
-                      onClick={() => setSelectedImage(s)}
-                    >
-                      <img
-                        onClick={() => changeBorderImage(index)}
-                        className={`h-full  ${
-                          index === selectedImageIndex
-                            ? `border-5 border-solid border-orange-600`
-                            : ""
-                        }`}
-                        src={s}
-                      />
-                    </div>
-                  </>
-                ))}
-            </div>
+            <Carousel data-bs-theme="dark">
+              {chunkedProducts.map((chunkProd, index) => (
+                <CarouselItem key={index}>
+                  <div className="h-36 flex mt-3 mb-5">
+                    {productDetail.imageSet &&
+                      chunkProd.map((s, index) => (
+                        <>
+                          <div
+                            key={index}
+                            className="relative border w-1/4 mr-3 cursor-pointer"
+                            onClick={() => setSelectedImage(s)}
+                          >
+                            <img
+                              onClick={() => changeBorderImage(index)}
+                              className={`h-full  ${
+                                index === selectedImageIndex
+                                  ? `border-5 border-solid border-orange-600`
+                                  : ""
+                              }`}
+                              src={s}
+                            />
+                          </div>
+                        </>
+                      ))}
+                  </div>
+                </CarouselItem>
+              ))}
+            </Carousel>
           </div>
           <div className="w-3/5 h-full p-3">
             <div className="text-2xl font-semibold">{productDetail.name}</div>

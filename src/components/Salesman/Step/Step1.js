@@ -6,9 +6,18 @@ import { toastError, toastSuccess } from "../../Toast";
 import { getProvinces } from "../../../configs/provinceAPI";
 import { getDistrictsByProvince } from "../../../configs/districtAPI";
 import { useNavigate } from "react-router-dom";
+import ConfirmModal from "../../ConfirmModal";
 
 export default function Step1({ currentStep, labelArray, updateStep }) {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState({});
   const [selectedProvince, setSelectedProvince] = useState("");
@@ -222,10 +231,18 @@ export default function Step1({ currentStep, labelArray, updateStep }) {
       <Button
         className="!bg-orange-500 !border-none !font-semibold"
         disabled={currentStep === labelArray.length}
-        onClick={createShop}
+        onClick={openModal}
       >
         Tiếp tục
       </Button>
+      <ConfirmModal
+        show={showModal}
+        onClose={closeModal}
+        onConfirm={() => {
+          createShop();
+          closeModal(); // Close the modal after confirmation
+        }}
+      />
     </Form>
   );
 }

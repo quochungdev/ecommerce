@@ -107,7 +107,7 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
                   <tr key={prod.id}>
                     <td className="py-2 !pl-4">{prod.id}</td>
                     <td className="py-2 !pl-4">{prod.name}</td>
-                    <td className="py-2 !pl-4">{prod.price}</td>
+                    <td className="py-2 !pl-4">${prod.price}</td>
                     <td className="py-2 !pl-4">{prod.qty}</td>
                     <td className="py-2 !pl-4">{prod.category.name}</td>
                     <td className="py-2 !pl-4">

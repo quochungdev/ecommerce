@@ -1,10 +1,12 @@
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 import { useContext, useReducer, useState } from "react";
-import { Button, Col, Form, Image, Row, ToastContainer } from "react-bootstrap";
+import { Button, Col, Form, Image, Row } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { MyUserContext } from "../App";
 import Apis, { authApi, endpoints } from "../configs/Apis";
 import cookie from "react-cookies";
+import { toastError, toastSuccess } from "./Toast";
+import { ToastContainer } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,13 +29,14 @@ const Login = () => {
         let { data } = await authApi().get(endpoints["current-user"]);
         cookie.save("user", data);
         console.info(data);
-
+        toastSuccess("Đăng nhập thành công")
         dispatch({
           type: "login",
           payload: data,
         });
         navigate("/home");
       } catch (ex) {
+        toastError("Tài khoản hoặc mật khẩu không chính xác")
         console.error(ex);
       }
     };

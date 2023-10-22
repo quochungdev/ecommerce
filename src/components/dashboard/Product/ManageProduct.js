@@ -7,10 +7,12 @@ import Apis, { authApi, endpoints } from "../../../configs/Apis";
 import { ToastContainer } from "react-toastify";
 import ModalChangeStatusProd from "./ModalChangeStatusProd";
 import PaginationItems from "../../PaginationItems";
+import { Link, useNavigate } from "react-router-dom";
 
 // export const CategoryReducers = createContext();
 
 export default function ManageProduct({ searchKeyword, handleSearch }) {
+  const navigate = useNavigate()
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
@@ -160,16 +162,21 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
                     </div>
                   </td>
                   <td className="py-2 !pl-4">
+                    <Button
+                      className="w-32 h-12 ml-5 mr-5"
+                      variant="dark"
+                      onClick={() => prod.status === 1 ? navigate(`/chi-tiet-san-pham/${prod.id}`) : ""}
+                    >
+                      <div className="flex items-center">
+                        <span className="pl-2 w-full font-semibold">
+                          Xem
+                        </span>
+                      </div>
+                    </Button>
                     <ModalChangeStatusProd
                       productId={prod.id}
                       loadProducts={loadProducts}
                     />
-                    {/* <UpdateProductComp
-                      productId={prod.id}
-                      prod={prod}
-                      loadProducts={loadProducts}
-                    /> */}
-                    {/* <ModalDeleteCategory categoryId={cate.id} /> */}
                   </td>
                 </tr>
               ))}

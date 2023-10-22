@@ -50,7 +50,7 @@ export default function Category() {
                         src={cate.imageUrl}
                       />
                       <Card.Title className="text-black">
-                        {cate.name}
+                        <h6>{cate.name}</h6>
                       </Card.Title>
                     </Card>
                   </Link>

@@ -97,13 +97,49 @@ export default function SideNav() {
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
                 className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
-                  location.pathname === "/admin/home"
+                  location.pathname === "/admin/users"
                     ? "text-white !font-bold"
                     : ""
                 } `}
-                to="/admin/home"
+                to="/admin/users"
               >
                 Người dùng
+              </Link>
+            </div>
+
+            <div
+              className={`flex mb-3 p-2 hover:bg-slate-600 ${
+                location.pathname === "/admin/payments" ? "bg-slate-600  " : ""
+              }`}
+            >
+              <img className="bg-button_color w-auto" src={overvewIcon} />
+              <Link
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                  location.pathname === "/admin/payments"
+                    ? "text-white !font-bold"
+                    : ""
+                } `}
+                to="/admin/payments"
+              >
+                Thanh toán
+              </Link>
+            </div>
+
+            <div
+              className={`flex mb-3 p-2 hover:bg-slate-600 ${
+                location.pathname === "/admin/vouchers" ? "bg-slate-600  " : ""
+              }`}
+            >
+              <img className="bg-button_color w-auto" src={overvewIcon} />
+              <Link
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                  location.pathname === "/admin/vouchers"
+                    ? "text-white !font-bold"
+                    : ""
+                } `}
+                to="/admin/vouchers"
+              >
+                Vouchers
               </Link>
             </div>
           </Nav>

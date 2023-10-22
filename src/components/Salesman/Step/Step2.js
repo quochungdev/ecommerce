@@ -21,7 +21,10 @@ export default function Step2({ currentStep, labelArray, updateStep }) {
         </p>
       </div>
       <div>
-        <Button className="!bg-orange-500" onClick={navigate("/home")}>
+        <Button
+          className="!bg-orange-500 !border-none !font-semibold"
+          onClick={() => navigate("/home")}
+        >
           Quay về trang chủ
         </Button>
       </div>

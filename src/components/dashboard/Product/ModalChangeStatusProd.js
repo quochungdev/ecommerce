@@ -59,7 +59,7 @@ export default function ModalChangeStatusProd({ productId, loadProducts }) {
               className="m-2 font-semibold"
               disabled={status === 1}
             >
-              Đã duyệt
+              Duyệt
             </Button>
             <Button
               onClick={() => setStatus(2)}
