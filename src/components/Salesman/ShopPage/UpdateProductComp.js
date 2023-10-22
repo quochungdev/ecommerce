@@ -85,10 +85,10 @@ export default function UpdateProductComp({ productId, prod, loadProducts }) {
 
   return (
     <>
-      <Button className="w-24 ml-5 mr-5 " variant="dark" onClick={handleShow}>
-        <div className="flex">
-          <img className="w-1/3" src={updateIcon} />
-          <span className="pl-2 w-2/3 font-semibold">Sửa</span>
+      <Button className="w-36 ml-5 mr-5 " variant="dark" onClick={handleShow}>
+        <div className="flex items-center">
+          <img className="w-1/4" src={updateIcon} />
+          <span className="pl-2 w-3/4 font-semibold">Cập nhật</span>
         </div>
       </Button>
 

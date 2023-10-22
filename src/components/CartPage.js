@@ -46,6 +46,7 @@ export default function CartPage() {
     dispatch({ type: "UPDATE_CART", payload: updateProduct });
   };
 
+  const [isAddingOrder, setIsAddingOrder] = useState(false);
   const [userAddress, setUserAddress] = useState(null);
   const [vouchers, setVouchers] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -93,6 +94,11 @@ export default function CartPage() {
       toastError("Vui lòng nhập đầy đủ thông tin");
       return;
     }
+    if (isAddingOrder) {
+      return;
+    }
+
+    setIsAddingOrder(true);
     try {
       let res = await authApi().post(endpoints["order_pay"], {
         infoProduct: cart,
@@ -107,26 +113,11 @@ export default function CartPage() {
     } catch (error) {
       toastError("Thêm thất bại");
       console.log(error);
+    } finally {
+      setIsAddingOrder(false);
     }
   };
 
-  // const handleRemoveCartProduct = (productId) => {
-  //   const productIndex = cart.find((c) => c === productId);
-  //   console.log(cart.filter((product) => product.id !== productId));
-  //   if (productIndex !== -1) {
-  //     // Create a copy of the current cart array without the product to be removed
-  //     const updatedCart = [...cart];
-  //     updatedCart.splice(productIndex, 1);
-
-  //     // Update the cart state
-  //     dispatch({ type: "UPDATE_CART", payload: updatedCart });
-
-  //     // Update localStorage
-  //     localStorage.setItem(`cart_${user.id}`, JSON.stringify(updatedCart));
-
-  //     toastSuccess("Đã xóa sản phẩm");
-  //   }
-  // };
   const handleRemoveFromCart = (productId) => {
     // Call the dispatch function with the "REMOVE_FROM_CART" action and the product's id as payload
     dispatch({ type: "REMOVE_FROM_CART", payload: { id: productId } });
@@ -137,8 +128,8 @@ export default function CartPage() {
     selectedVoucherId &&
     totalAmount - totalAmount * (selectedVoucherId.value / 100);
   return (
-    <>
-      <div className="bg-orange-300 h-20 flex items-center ">
+    <div className="mb-10">
+      <div className="bg-orange-300 h-20 flex items-center">
         <ToastContainer />
         <div className="container flex">
           <Image src={cartIcon} />
@@ -304,6 +295,7 @@ export default function CartPage() {
           ) : (
             <Button
               onClick={createOrder}
+              disabled={isAddingOrder === true}
               className=" p-4 !mx-0 text-xl w-full !font-bold !bg-black border "
             >
               <div>Thanh toán bằng tiền mặt</div>
@@ -311,6 +303,6 @@ export default function CartPage() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

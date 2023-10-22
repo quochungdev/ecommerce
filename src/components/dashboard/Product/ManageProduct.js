@@ -15,6 +15,7 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
   const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
   const endIndex = startIndex + itemsPerPage; // Chỉ mục kết thúc
+  const [showMore, setShowMore] = useState({});
 
   const [status, setStatus] = useState(0);
   const [products, setProducts] = useState([]);
@@ -31,28 +32,18 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
     loadProducts();
   }, [status]);
 
-  //   useEffect(() => {
-  //     if(status !== null) {
-  //         const updateProduct = products.map((prod) => ({
-  //             ...prod,
-  //             status: status,
-  //         }))
-  //         setProducts(updateProduct)
-  //     }
-  //     console.log("useeffect");
-  //   },[status])
-
-  //   const paginationItem = categories.slice(startIndex, endIndex);
-  //   const filteredItems = paginationItem.filter((item) =>
-  //     item.name.toLowerCase().includes(searchKeyword.toLowerCase())
-  //   );
-
+  const toggleShowMore = (prodId) => {
+    setShowMore((prev) => ({
+      ...prev,
+      [prodId]: !prev[prodId],
+    }));
+  };
   return (
     <>
       <ToastContainer />
       <div className=" h-full !mx-0">
         <div className="flex justify-between">
-          <h2>Danh mục</h2>
+          <h2 className="">Danh mục</h2>
         </div>
         <div className="p-2 mt-2 shadow-md rounded-md">
           <div className="relative m-1 w-2/4 ">
@@ -120,7 +111,29 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
                 <tr key={prod.id}>
                   <td className="py-2 !pl-4">{prod.id}</td>
                   <td className="py-2 !pl-4">{prod.name}</td>
-                  <td className="py-2 !pl-4">{prod.description}</td>
+                  <td>
+                    {showMore[prod.id] ? (
+                      <div
+                        className="rendered-content"
+                        dangerouslySetInnerHTML={{ __html: prod.description }}
+                      />
+                    ) : (
+                      <div
+                        className="rendered-content"
+                        dangerouslySetInnerHTML={{
+                          __html: prod.description.substring(0, 140),
+                        }}
+                      />
+                    )}
+                    {prod.description.length > 150 && (
+                      <a
+                        className="decoration-emerald-500 pl-5"
+                        onClick={() => toggleShowMore(prod.id)}
+                      >
+                        {showMore[prod.id] ? "Thu gọn" : "Xem thêm"}
+                      </a>
+                    )}
+                  </td>
                   <td className="py-2 !pl-4">{prod.price}</td>
                   <td className="py-2 !pl-4">{prod.qty}</td>
                   <td className="py-2 !pl-4">{prod.shop.name}</td>
@@ -157,11 +170,11 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
               ))}
             </tbody>
             <PaginationItems
-                array={products}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-              />
+              array={products}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </Table>
         </div>
       </div>

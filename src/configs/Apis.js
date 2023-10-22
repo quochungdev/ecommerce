@@ -50,6 +50,7 @@ export const endpoints = {
     "change_password": `/api/user/change-password/`,
 
     "search_product":  (keyword) =>  `/api/search/?keyword=${keyword}`,
+    "search":  (keyword) =>  `/api/search/?keyword=${keyword}`,
 
     "reviews": (productId) => `/api/reviews/${productId}/`,
     "create_review": (productId) => `/api/create_review/${productId}/`,

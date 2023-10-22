@@ -17,7 +17,7 @@ export default function PersonalInfo() {
           <Routes>
             <Route path="/" element={<UpdateUserInfo />} />
             <Route path="/diachi" element={<ManageAddress />} />
-            <Route path="/donmua" element={<MyPurchase />} />
+            <Route path="/donmua/" element={<MyPurchase />} />
             <Route path="/change-password" element={<PasswordComp />} />
             <Route path="/verify" element={<VerifyPassword />} />
             <Route path="/change" element={<ChangePassword />} />

@@ -5,12 +5,15 @@ import { toastError, toastSuccess } from "../../Toast";
 import { UserShopContext } from "../../../layouts/MainLayout";
 import { ToastContainer } from "react-toastify";
 import { MyUserContext } from "../../../App";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default function CreateProductComp() {
   const [shop] = useContext(UserShopContext);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [selectedSubCategory, setSelectedSubCategory] = useState(1);
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
 
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -41,6 +44,13 @@ export default function CreateProductComp() {
   }, []);
 
   const createProduct = async () => {
+    if (isAddingProduct) {
+      // Nếu đang thêm sản phẩm, chặn hành động
+      return;
+    }
+
+    setIsAddingProduct(true); // Đánh dấu rằng đang thêm sản phẩm
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", desc);
@@ -62,8 +72,9 @@ export default function CreateProductComp() {
       toastSuccess("Thêm thành công");
     } catch (error) {
       toastError("Thêm thất bại");
-      console.log(selectedSubCategory);
       console.log(error);
+    } finally {
+      setIsAddingProduct(false); // Đánh dấu rằng đã hoàn thành thêm sản phẩm
     }
   };
 
@@ -98,7 +109,7 @@ export default function CreateProductComp() {
               autoFocus
             />
           </Form.Group>
-          <Form.Group className="mb-3 flex">
+          {/* <Form.Group className="mb-3 flex">
             <Form.Label className="w-1/6 text-center text-xl font-semibold">
               Mô tả
             </Form.Label>
@@ -109,7 +120,21 @@ export default function CreateProductComp() {
               as="textarea"
               autoFocus
             />
+          </Form.Group> */}
+          <Form.Group className="mb-3 flex">
+            <Form.Label className="w-1/6 text-center text-xl font-semibold">Mô tả</Form.Label>
+            <ReactQuill
+              className="h-2/3"
+              required
+              theme="snow"
+              value={desc}
+              onChange={(newContent) => setDesc(newContent)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Vui lòng nhập nội dung
+            </Form.Control.Feedback>
           </Form.Group>
+
           <Form.Group className="mb-3 flex">
             <Form.Label className="w-1/6 text-center text-xl font-semibold">
               Số lượng
@@ -203,6 +228,7 @@ export default function CreateProductComp() {
               variant=""
               className="w-2/3 text-center text-white !font-semibold !bg-orange-500"
               onClick={createProduct}
+              disabled={isAddingProduct === true}
             >
               Tạo sản phẩm
             </Button>

@@ -5,7 +5,9 @@ import shopIcon from "../../assets/image/shop.png";
 import searchIcon from "../../assets/image/search.png";
 import { Button, Form } from "react-bootstrap";
 import { toastError } from "../Toast";
+import { Link, useParams } from "react-router-dom";
 export default function MyPurchase() {
+  let { id } = useParams();
   const [keyword, setKeyword] = useState("");
   const [orders, setOrders] = useState([]);
   const [status, setStatus] = useState(0);
@@ -45,7 +47,9 @@ export default function MyPurchase() {
       <ToastContainer />
       <div className=" bg-white shadow-md h-auto m-10 ">
         <div className="border flex justify-between items-center">
-          <div className="text-center text-2xl font-semibold p-4">Đơn hàng của tôi</div>
+          <div className="text-center text-2xl font-semibold p-4">
+            Đơn hàng của tôi
+          </div>
         </div>
       </div>
 
@@ -134,24 +138,26 @@ export default function MyPurchase() {
             </div>
           </div>
           <div>
-            <div className="border flex justify-between items-center">
-              <div className="w-3/4 text-xl p-4  flex">
-                <img className="w-28" src={order.product.thumbnail} />
-                <div className="w-full flex flex-col mx-2">
-                  <div className="font-semibold">{order.product.name}</div>
-                  <div className="text-gray-500">Phân loại hàng: Áo quần</div>
-                  <div className="flex">
-                    <div className="font-semibold">Số lượng:</div>
-                    <div className="font-semibold px-2 text-red-500">
-                      {order.qty}
+            <Link className="decoration-transparent" to={`/chi-tiet-san-pham/${order.product.id}`}>
+              <div className="border flex justify-between items-center transition-all duration-200 hover:shadow-2xl">
+                <div className="w-3/4 text-xl p-4  flex">
+                  <img className="w-28" src={order.product.thumbnail} />
+                  <div className="w-full flex flex-col mx-2">
+                    <div className="font-semibold text-gray-500 hover:text-orange-500">{order.product.name}</div>
+                    <div className="text-gray-500">Phân loại hàng: Áo quần</div>
+                    <div className="flex">
+                      <div className="font-semibold text-gray-500">Số lượng:</div>
+                      <div className="font-semibold px-2 text-red-500">
+                        {order.qty}
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div className="w-1/4 text-red-500 text-right text-2xl font-semibold p-4">
+                  $139
+                </div>
               </div>
-              <div className="w-1/4 text-red-500 text-right text-2xl font-semibold p-4">
-                $139
-              </div>
-            </div>
+            </Link>
             <div className="border p-4">
               <div className="flex font-semibold text-xl items-center">
                 <div className="">Thành tiền:</div>

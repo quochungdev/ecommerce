@@ -1,11 +1,13 @@
 import React from "react";
 import { Dropdown, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import overvewIcon from "../../../assets/image/overview.png";
 import CustomNav from "../../CustomNav";
 import CustomSideNav from "./CustomSideNav";
 
 export default function SideNav() {
+  const location = useLocation();
+
   const navCustom = [
     {
       id: 1,
@@ -15,16 +17,12 @@ export default function SideNav() {
     },
     {
       id: 2,
-      link: "/banhang",
+      link: "/banhang/products",
       navName: "Quản lý sản phẩm",
       parent: [
         {
           link: "/banhang/create-product",
           navParentName: "Thêm sản phẩm",
-        },
-        {
-          link: "/banhang/products",
-          navParentName: "Xem sản phẩm",
         },
       ],
     },
@@ -47,10 +45,39 @@ export default function SideNav() {
         <div className="">
           <Nav className="flex flex-col h-full  ">
             {navCustom.map((nav) => (
-              <div key={nav.id} className="flex p-2 mb-5 px-3">
-                <img className="bg-button_color w-auto" src={overvewIcon} />
-                <CustomSideNav nav={nav} />
-              </div>
+              <>
+                <div
+                  key={nav.id}
+                  className={`flex p-2 mb-3 px-3   ${
+                    location.pathname === nav.link ? "bg-lime-600" : ""
+                  } `}
+                >
+                  <img className="bg-button_color w-auto" src={overvewIcon} />
+                  <CustomSideNav nav={nav} />
+                </div>
+                {nav.parent ? (
+                  <div className="ml-5 -mt-3">
+                    <ul>
+                    {nav.parent.map((nav) => (
+                        <li className="py-1 ">
+                          <Link
+                            className={`decoration-transparent text-black font-semibold text-xs ${
+                              location.pathname === nav.link
+                                ? "bg-lime-600"
+                                : ""
+                            }`}
+                            to={nav.link}
+                          >
+                            <span className="mx-2">•</span>{nav.navParentName}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </>
             ))}
           </Nav>
         </div>

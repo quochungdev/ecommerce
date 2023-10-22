@@ -27,10 +27,21 @@ export default function ProductDetails() {
   const [image, setImage] = useState(null);
   const [selectedstar, setSelectedStar] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null); // State to track selected image
-
+  const [showMore, setShowMore] = useState({});
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const toggleShowMore = (prodId) => {
+    setShowMore((prev) => ({
+      ...prev,
+      [prodId]: !prev[prodId],
+    }));
+  };
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
+  };
+
+  const changeBorderImage = (index) => {
+    setSelectedImageIndex(index);
   };
 
   const createReview = async () => {
@@ -38,10 +49,13 @@ export default function ProductDetails() {
     formData.append("content", content);
     formData.append("imageUrl", image);
     formData.append("star", selectedstar);
-
     try {
       let res = await authApi().post(endpoints.create_review(id), formData);
-      setReviews((prev) => [...prev, res.data]);
+      console.log(res.data);
+      if (res.data === "") {
+        toastError("Vui lòng mua hàng trước khi đánh giá");
+        return;
+      } else setReviews((prev) => [...prev, res.data]);
       toastSuccess("Đã gửi đánh giá");
     } catch (error) {
       console.log(error);
@@ -67,6 +81,16 @@ export default function ProductDetails() {
     }
   };
 
+  let subImageArray = [];
+
+  if (productDetail.imageSet && Array.isArray(productDetail.imageSet)) {
+    subImageArray = [
+      productDetail.thumbnail,
+      ...productDetail.imageSet.map((i) => i.imageUrl),
+    ];
+  }
+  console.log(subImageArray);
+
   const { dispatch } = useCart();
   const addToCart = () => {
     dispatch({ type: "ADD_TO_CART", payload: productDetail });
@@ -80,33 +104,47 @@ export default function ProductDetails() {
 
   //  console.log( productDetail.imageSet.map(image => image.imageUrl))
   return (
-    <div className="container-background">
+    <div className="container-background mb-14">
       <ToastContainer />
       <div className="container bg-white h-auto mt-3 shadow-md">
         <div className="w-full h-full flex">
           <div className="h-full flex flex-col w-2/5 justify-center ">
-              <div className="w-full h-full flex justify-center">
-                <img
-                  className="w-full"
-                  src={selectedImage || productDetail.thumbnail} // Use the selected image or thumbnail
-                />
-              </div>
-            <div className="h-36 flex mt-3">
-              {/* {productDetail.imageSet &&
-                productDetail.imageSet.map((s, index) => (
-                  <div key={index} className="relative border w-1/4 mr-3">
-                    <img className="h-full" src={s.imageUrl} />
-                  </div>
-                ))} */}
+            <div className="w-full h-full flex justify-center">
+              <img
+                className="w-full"
+                src={selectedImage || productDetail.thumbnail} // Use the selected image or thumbnail
+              />
+            </div>
+            <div className="h-36 flex mt-3 mb-5">
+              {/* <img
+                onClick={() => setSelectedImage(productDetail.thumbnail)}
+                className={`relative border w-1/4 mr-3 cursor-pointer ${
+                  selectedImageIndex === 0
+                    ? `border-5 border-solid border-orange-600`
+                    : ""
+                }`}
+                src={productDetail.thumbnail}
+                alt=""
+              /> */}
               {productDetail.imageSet &&
-                productDetail.imageSet.map((s, index) => (
-                  <div
-                    key={index}
-                    className="relative border w-1/4 mr-3"
-                    onClick={() => setSelectedImage(s.imageUrl)} // Handle the click event
-                  >
-                    <img className="h-full" src={s.imageUrl} />
-                  </div>
+                subImageArray.map((s, index) => (
+                  <>
+                    <div
+                      key={index}
+                      className="relative border w-1/4 mr-3 cursor-pointer"
+                      onClick={() => setSelectedImage(s)}
+                    >
+                      <img
+                        onClick={() => changeBorderImage(index)}
+                        className={`h-full  ${
+                          index === selectedImageIndex
+                            ? `border-5 border-solid border-orange-600`
+                            : ""
+                        }`}
+                        src={s}
+                      />
+                    </div>
+                  </>
                 ))}
             </div>
           </div>
@@ -120,7 +158,29 @@ export default function ProductDetails() {
                 MÔ TẢ SẢN PHẨM
               </h3>
               <div>
-                <p>{productDetail.description}</p>
+                {showMore[productDetail.id] ? (
+                  <div
+                    className="rendered-content"
+                    dangerouslySetInnerHTML={{
+                      __html: productDetail.description,
+                    }}
+                  />
+                ) : (
+                  <div
+                    className="rendered-content"
+                    dangerouslySetInnerHTML={{
+                      __html: productDetail.description?.substring(0, 520),
+                    }}
+                  />
+                )}
+                {productDetail.description?.length > 180 && (
+                  <a
+                    className="decoration-emerald-500 pl-5"
+                    onClick={() => toggleShowMore(productDetail.id)}
+                  >
+                    {showMore[productDetail.id] ? "Thu gọn" : "Xem thêm"}
+                  </a>
+                )}{" "}
               </div>
             </div>
             <div className="flex my-3">
@@ -137,10 +197,10 @@ export default function ProductDetails() {
       <div className="container bg-white shadow-md h-auto mt-5 ">
         <div className="p-2 ">
           <h2 className="m-3 p-3 bg-gray-100 font-semibold">
-            Thông tin nhà bán
+            Thông tin cửa hàng
           </h2>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center pb-5">
           <div className="w-1/12">
             <Image
               className=""
@@ -206,7 +266,12 @@ export default function ProductDetails() {
                 >
                   <img className="w-8" src={cameraIcon} />
                 </label>
-
+                <Button
+                  onClick={createReview}
+                  className="!bg-orange-500 !border-none !font-semibold"
+                >
+                  Đánh giá
+                </Button>
                 <div>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <MDBIcon

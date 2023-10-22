@@ -10,16 +10,18 @@ import {
   Row,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MyUserContext } from "../App";
-import cartIcon from "../assets/image/shopping-cart.png";
+import searchIcon from "../assets/image/search.png";
 import heartIcon from "../assets/image/heart.svg";
 import "../assets/CSS/Header.css";
 import CustomNav from "../components/CustomNav";
 import { UserShopContext } from "../layouts/MainLayout";
-import NotificationDropdown from "../components/dashboard/NotificationDropdown";
 import CartDropdown from "../components/CartDropdown";
-const Header = () => {
+import Apis, { endpoints } from "../configs/Apis";
+import CustomNavUser from "../components/CustomNavUser";
+import { toastError } from "../components/Toast";
+const Header = ({ searchKeyword, handleSearch }) => {
   const navigate = useNavigate();
   const [shop] = useContext(UserShopContext);
   const [user, dispatch] = useContext(MyUserContext);
@@ -29,14 +31,40 @@ const Header = () => {
     });
     navigate("/home");
   };
+  const [keyword, setKeyword] = useState("");
+  const search = async (e) => {
+    e.preventDefault(); //
+    try {
+      if (keyword.trim() === "") {
+        return;
+      } else {
+        let res = await Apis.get(endpoints.search(keyword));
+        console.log(res.data);
+        navigate(`/search?keyword=${keyword}`, {
+          state: { searchData: res.data },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toastError("Không tìm thấy sản phẩm nào");
+    }
+  };
 
-  console.log(user);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const loadCategories = async () => {
+      let res = await Apis.get(endpoints["categories"]);
+      console.log(res.data);
+      setCategories(res.data);
+    };
+    loadCategories();
+  }, []);
 
   const navCustom = [
     {
       id: 1,
       link: "/home",
-      navName: "TRANG CHỦ",
+      navName: "Trang chủ",
       parent: null,
     },
     {
@@ -49,33 +77,20 @@ const Header = () => {
           : "/dang-ky-ban-hang",
       navName:
         user && user.roleName === "ROLE_ADMIN"
-          ? "ADMIN"
+          ? "Admin"
           : shop?.status === 1
-          ? "QUẢN LÝ SHOP"
-          : "THƯƠNG GIA",
+          ? "Quản lý shop"
+          : "Thương gia",
       parent: null,
     },
     {
       id: 3,
-      navName: "SẢN PHẨM",
-      parent: [
-        {
-          navParentName: "Progaming",
-          children: null,
-        },
-        {
-          navParentName: "Progaming2",
-          children: [
-            {
-              navChildName: "HTML",
-            },
-          ],
-        },
-        {
-          navParentName: "Progaming3",
-          children: null,
-        },
-      ],
+      link: "/",
+      navName: "Danh mục",
+      parent: categories.map((cate) => ({
+        navParentName: cate.name,
+        children: null,
+      })),
     },
     {
       id: 4,
@@ -86,7 +101,7 @@ const Header = () => {
           <span className="w-4/5">{user.fullName}</span>
         </div>
       ) : (
-        "ĐĂNG NHẬP"
+        "Đăng nhập"
       ),
       parent: user
         ? [
@@ -94,9 +109,17 @@ const Header = () => {
               link: "/thong-tin-ca-nhan",
               navParentName: "Thông tin cá nhân",
             },
+            ...(shop
+              ? [
+                  {
+                    link: "/banhang",
+                    navParentName: "Quản lý shop",
+                  },
+                ]
+              : []),
             {
-              link: "/banhang",
-              navParentName: shop ? "Quản lý shop" : null,
+              link: "/thong-tin-ca-nhan/donmua",
+              navParentName: "Đơn mua",
             },
             {
               navParentName: "Đăng xuất",
@@ -108,7 +131,7 @@ const Header = () => {
     {
       id: 5,
       link: "/dang-ky",
-      navName: user ? `ĐĂNG XUẤT` : "ĐĂNG KÝ",
+      navName: user ? `Đăng xuất` : "Đăng ký",
       parent: null,
     },
   ];
@@ -116,13 +139,27 @@ const Header = () => {
     <>
       <div expand="lg" className="  !justify-center  w-full bg-white">
         <div className=" w-full h-20">
-          <div className=" w-10/12 h-full mx-auto flex">
+          <div className=" w-11/12 h-full mx-auto flex">
             <div className="w-3/12 h-full  items-center justify-center flex">
-              <div className="h-3/4 w-1/2  ">
+              <div className="h-3/4 w-full ">
                 <Image
                   className="w-full h-full"
                   src="https://penji.co/wp-content/uploads/2019/08/ecommerce_logo_magento.jpg"
                 />
+              </div>
+              <div className="w-full relative">
+                <Form>
+                  <Form.Control
+                    type="text"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
+                    placeholder="Tìm kiếm..."
+                    className=" mr-sm-2 "
+                  />
+                  <button onClick={search} className="absolute right-0 top-1">
+                    <img className="w-2/3 mt-1" src={searchIcon} />
+                  </button>
+                </Form>
               </div>
             </div>
             <div className="w-7/12 h-full  flex items-center">
@@ -140,7 +177,9 @@ const Header = () => {
             <div className="w-2/12 h-full  flex items-center">
               <div className="w-full h-2/5  flex">
                 {navCustom.map((nav) => (
-                  <>{user && nav.id === 4 ? <CustomNav nav={nav} /> : null}</>
+                  <>
+                    {user && nav.id === 4 ? <CustomNavUser nav={nav} /> : null}
+                  </>
                 ))}
                 <CartDropdown />
                 <Image

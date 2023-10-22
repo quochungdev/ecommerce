@@ -16,6 +16,7 @@ import CartPage from "../components/CartPage";
 import PersonalInfo from "../components/UserInFo/PersonalInfo";
 import PaymentSuccess from "../components/PaymentSuccess";
 import Footer from "../pages/Footer";
+import SearchPage from "../components/SearchPage";
 
 export const UserShopContext = createContext();
 
@@ -25,22 +26,22 @@ export default function MainLayout({ searchKeyword, handleSearch }) {
   const checkRoleShop = async () => {
     try {
       let res = await authApi().get(endpoints["role_shop"]);
-      setShop(res.data)
+      setShop(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(shop);
   useEffect(() => {
-    checkRoleShop();  
+    checkRoleShop();
   }, [user]);
 
   return (
     <>
       <CartProvider>
         <UserShopContext.Provider value={[shop]}>
-          <Header />
+          <Header searchKeyword={searchKeyword} handleSearch={handleSearch} />
           <Routes>
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/dang-nhap" element={<Login />} />
             <Route path="/dang-ky" element={<Register />} />
@@ -61,6 +62,7 @@ export default function MainLayout({ searchKeyword, handleSearch }) {
               }
             />
           </Routes>
+          <Footer />
         </UserShopContext.Provider>
       </CartProvider>
     </>

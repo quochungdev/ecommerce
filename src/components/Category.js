@@ -32,23 +32,26 @@ export default function Category() {
         <h2>DANH MỤC</h2>
       </div>
       <div className="w-full h-96">
-        <Carousel>
+        <Carousel data-bs-theme="dark">
           {chunkedCategories.map((chunk, index) => (
             <CarouselItem key={index}>
               <ul className="w-full h-full px-0 flex flex-row flex-wrap">
                 {chunk.map((cate) => (
                   <Link
                     key={cate.id}
+                    onClick={() => window.scrollTo(0, 0)}
                     to={`/san-pham/${cate.id}`}
                     className="w-2/12 !h-2/4 decoration-transparent"
                   >
-                    <Card className="items-center">
+                    <Card className="items-center bg-white">
                       <Card.Img
                         className="!w-2/3"
                         variant="top"
                         src={cate.imageUrl}
                       />
-                      <Card.Title className="">{cate.name}</Card.Title>
+                      <Card.Title className="text-black">
+                        {cate.name}
+                      </Card.Title>
                     </Card>
                   </Link>
                 ))}

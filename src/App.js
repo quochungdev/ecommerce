@@ -13,6 +13,7 @@ import cookie from "react-cookies";
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import Chat from "./components/Chat/Chat";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 export const MyUserContext = createContext();
 

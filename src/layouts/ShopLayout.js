@@ -21,7 +21,7 @@ export default function ShopLayout({searchKeyword, handleSearch}) {
         <SideNav />
         <div className=" w-5/6 min-h-screen">
           <Routes>
-            <Route path="/" element={<ShopHome />} />
+            <Route path="/" element={<Overview />} />
             <Route path="/tongquan" element={<Overview />} />
             <Route path="/create-product" element={<CreateProductComp  />} />
             <Route path="/products" element={<ProductByShop searchKeyword={searchKeyword} handleSearch={handleSearch}/>} />

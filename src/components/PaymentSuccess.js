@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import checkIcon from "../assets/image/check_icon.png";
 export default function PaymentSuccess() {
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full mb-56">
       <div className=" justify-center flex container mt-5 p-5 shadow-lg ">
         {
           <div className="flex flex-col items-center w-full">

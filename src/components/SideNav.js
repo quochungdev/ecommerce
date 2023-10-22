@@ -30,7 +30,7 @@ export default function SideNav() {
     {
       id: 3,
       link: "/thong-tin-ca-nhan/donmua",
-      navName: "Lịch sử đơn hàng",
+      navName: "Đơn hàng",
       parent: null,
     },
   ];

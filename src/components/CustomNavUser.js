@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function CustomNav({ nav }) {
+export default function CustomNavUser({ nav }) {
   return (
-    <div class="group inline-block z-30 px-3 relative">
+    <div class="group inline-block z-30 px-3">
       <Link
         to={nav.link}
         className="decoration-transparent text-black justify-center flex items-center w-full h-full"
       >
-        <button class="outline-none focus:outline-none  bg-white rounded-sm flex items-center min-w-23">
+        <button class="outline-none focus:outline-none  bg-white rounded-sm flex items-center min-w-32">
           <span class="pr-1 font-semibold flex-1">{nav.navName}</span>
           {nav.parent ? (
             <span>
@@ -24,18 +24,16 @@ export default function CustomNav({ nav }) {
           ) : null}
         </button>
       </Link>
-      <div className="absolute left-0 right-0">
-        <ul
-          class="z-30 px-0 bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
-                                        transition duration-150 ease-in-out origin-top custom-nav-header"
-        >
-          {nav.parent
-            ? nav.parent.map((nav) =>
-                nav.children ? <LiNotNull nav={nav} /> : <LiNull nav={nav} />
-              )
-            : null}
-        </ul>
-      </div>
+      <ul
+        class="z-30 px-0 bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
+                                        transition duration-150 ease-in-out origin-top min-w-32"
+      >
+        {nav.parent
+          ? nav.parent.map((nav) =>
+              nav.children ? <LiNotNull nav={nav} /> : <LiNull nav={nav} />
+            )
+          : null}
+      </ul>
     </div>
   );
 }
@@ -43,9 +41,7 @@ export default function CustomNav({ nav }) {
 function LiNull({ nav }) {
   return (
     <li onClick={nav.action} class="rounded-sm px-3 py-1 hover:bg-gray-100 ">
-      <Link className="decoration-transparent text-black" to={nav.link}>
-        {nav.navParentName}
-      </Link>
+      <Link className="decoration-transparent text-black" to={nav.link}>{nav.navParentName}</Link>
     </li>
   );
 }

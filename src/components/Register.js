@@ -16,6 +16,7 @@ const Register = () => {
   const [phone, setPhone] = useState();
   const [avatar, setAvatar] = useState(null); // Khởi tạo là null
   const [showCode, setShowCode] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
 
   const handleAvatarChange = (e) => {
     const selectedFile = e.target.files[0]; // Lấy tệp được chọn
@@ -50,7 +51,7 @@ const Register = () => {
     const process = async () => {
       try {
         let res = await authApi().post(endpoints["register"], formData);
-        navigate("/dangnhap");
+        navigate("/dang-nhap");
         toastSuccess("Đăng ký thành công");
         console.log(res.data);
       } catch (ex) {
@@ -231,9 +232,9 @@ const Register = () => {
                   </Col>
                 </Row>
                 <div className="d-flex flex-row align-items-center justify-content-center">
-                  <p className="mb-0 text-gray-400">Bạn mới đến shopee?</p>
-                  <Link className="text-orange-500 font-bold decoration-transparent ml-2">
-                    Đăng ký
+                  <p className="mb-0 text-gray-400">Bạn đã có tài khoản?</p>
+                  <Link to="/dang-nhap" className="text-orange-500 font-bold decoration-transparent ml-2">
+                    Đăng nhập
                   </Link>
                 </div>
               </div>

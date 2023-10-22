@@ -18,7 +18,6 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
       console.log(ex);
     }
   };
-  console.log(products);
   useEffect(() => {
     loadProducts();
   }, [status]);
@@ -38,7 +37,7 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
         <ToastContainer />
         <div className="h-full">
           <div className="flex justify-between">
-            <h2>Danh mục</h2>
+            <h2 className="!m-5">Danh mục</h2>
           </div>
           <div className="p-2 mt-2 shadow-md rounded-md">
             <div className="relative m-1 w-2/4 ">
