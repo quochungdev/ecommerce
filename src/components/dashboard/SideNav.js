@@ -10,7 +10,7 @@ export default function SideNav() {
     <>
       <div className="bg-sidenav_background w-1/5 min-h-screen">
         <div className="text-center p-3">
-          <h3 className="text-white">Dashboard Admin</h3>
+          <h3 className="text-white">Trang quản trị viên</h3>
         </div>
 
         <hr className="text-white border-solid border" />
@@ -31,7 +31,7 @@ export default function SideNav() {
                 } `}
                 to="/admin/overview"
               >
-                Overview
+                Tổng quan
               </Link>
             </div>
 
@@ -85,7 +85,7 @@ export default function SideNav() {
                 } `}
                 to="/admin/shop"
               >
-                Shop
+                Cửa hàng
               </Link>
             </div>
 

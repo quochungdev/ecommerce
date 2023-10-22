@@ -16,16 +16,17 @@ export function CartProvider({ children }) {
   function cartReducer(state, action) {
     switch (action.type) {
       case "ADD_TO_CART":
+        const { id, quantity: addQuantity = 1 } = action.payload;
         const existProduct = state.find(
-          (product) => product.id === action.payload.id
+          (product) => product.id === id
         );
         if (existProduct) {
           return state.map((product) =>
-            product.id === action.payload.id
+            product.id === id
               ? {
                   ...product,
-                  quantity: product.quantity + 1,
-                  total: (product.quantity + 1) * product.price,
+                  quantity: product.quantity + addQuantity,
+                  total: (product.quantity + addQuantity) * product.price,
                 }
               : product
           );
@@ -34,8 +35,8 @@ export function CartProvider({ children }) {
             ...state,
             {
               ...action.payload,
-              quantity: 1,
-              total: action.payload.price * 1,
+              quantity: addQuantity,
+              total: action.payload.price * addQuantity,
             },
           ];
 

@@ -16,9 +16,9 @@ export default function Onboarding() {
               className="w-2/6"
               src="https://deo.shopeesz.com/shopee/pap-admin-live-sg/upload/upload_9dab85081088531ee6d1aa958a90f55e.png"
             />
-            <h4>Chào mừng bạn đến Magento dành cho người bán</h4>
+            <h4>Chào mừng bạn đến trang dành cho người bán</h4>
             <p>
-              Để đăng ký bán hàng trên Shopee, bạn cần cung cấp một số thông tin
+              Để đăng ký bán hàng trên Magento, bạn cần cung cấp một số thông tin
               cơ bản.
             </p>
             <Button className="!bg-orange-500 !border-none py-2 px-4 !font-semibold">

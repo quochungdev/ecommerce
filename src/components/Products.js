@@ -33,7 +33,6 @@ export default function Products() {
   },[])
   
   const productsByCategory = products.filter((product) => product.category.id == id);
-  console.log(products.filter((product) => product.category.id == id));
   return (
     <div className="mt-5 container !px-0 h-auto flex ">
      {/* Danh mục và Bộ lọc tìm kiếm */}

@@ -4,10 +4,10 @@ import { Button, Col, Form, Image, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { authApi, endpoints } from "../configs/Apis";
 import { toastError, toastSuccess } from "./Toast";
+import { ToastContainer } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
-
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
@@ -17,6 +17,7 @@ const Register = () => {
   const [avatar, setAvatar] = useState(null); // Khởi tạo là null
   const [showCode, setShowCode] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [isAddingEmail, setIsAddingEmail] = useState(false);
 
   const handleAvatarChange = (e) => {
     const selectedFile = e.target.files[0]; // Lấy tệp được chọn
@@ -24,20 +25,35 @@ const Register = () => {
   };
 
   const verifyEmail = async () => {
+    if (isAddingEmail) {
+      return;
+    }
+    setIsAddingEmail(true); 
     const formData = new FormData();
     formData.append("email", email);
     try {
       let res = await authApi().post(endpoints["verify_mail"], formData);
       res.data ? setShowCode(true) : setShowCode(false);
       toastSuccess("Chúng tôi sẽ gửi mã code xác thực qua email của bạn");
+      setIsAddingEmail(false); 
     } catch (error) {
       toastError("Kết nối máy chủ thất bại");
+      setIsAddingEmail(false)
       console.log(error);
     }
   };
 
   const register = (evt) => {
     evt.preventDefault();
+
+    if (!username || !password || !email || !codeEmail || !phone || !avatar) {
+      toastError("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
+    if (isAddingEmail) {
+      return;
+    }
+    setIsAddingEmail(true); 
 
     const formData = new FormData();
     formData.append("full_Name", fullName);
@@ -51,11 +67,12 @@ const Register = () => {
     const process = async () => {
       try {
         let res = await authApi().post(endpoints["register"], formData);
-        navigate("/dang-nhap");
         toastSuccess("Đăng ký thành công");
-        console.log(res.data);
+        setIsAdding(false)
+        navigate("/dang-nhap");
       } catch (ex) {
         toastError("Đăng ký thất bại");
+        setIsAdding(false)
         console.error(ex);
       }
     };
@@ -64,6 +81,7 @@ const Register = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="bg-orange-600">
         <MDBContainer className="gradient-form ">
           <MDBRow>
@@ -139,6 +157,7 @@ const Register = () => {
                       onClick={verifyEmail}
                       variant="dark"
                       className="w-1/2 h-auto mx-3"
+                      disabled={isAddingEmail === true}
                     >
                       Xác nhận
                     </Button>
@@ -192,18 +211,11 @@ const Register = () => {
                       className="w-full pt-2 pb-2 !text-2xl !font-semibold mt-3"
                       type="submit"
                       variant="danger"
+                      disabled={isAdding === true}
                     >
                       ĐĂNG KÝ
                     </Button>
                   </Form.Group>
-                  <div className="">
-                    <Link className="float-left decoration-transparent">
-                      Quên mật khẩu
-                    </Link>
-                    <Link className="float-right decoration-transparent">
-                      Đăng nhập vào SMS
-                    </Link>
-                  </div>
                 </Form>
                 <Row className="mb-5 mt-4">
                   <Col>
@@ -233,7 +245,10 @@ const Register = () => {
                 </Row>
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <p className="mb-0 text-gray-400">Bạn đã có tài khoản?</p>
-                  <Link to="/dang-nhap" className="text-orange-500 font-bold decoration-transparent ml-2">
+                  <Link
+                    to="/dang-nhap"
+                    className="text-orange-500 font-bold decoration-transparent ml-2"
+                  >
                     Đăng nhập
                   </Link>
                 </div>

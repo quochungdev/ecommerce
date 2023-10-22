@@ -56,7 +56,7 @@ export default function ManageCategory({ searchKeyword, handleSearch }) {
                 type="text"
                 value={searchKeyword}
                 onChange={handleSearch}
-                placeholder="Search Category..."
+                placeholder="Tìm kiếm danh mục..."
                 className=" mr-sm-2 "
               />
               <button className="absolute right-0 top-1" type="submit">
@@ -72,7 +72,7 @@ export default function ManageCategory({ searchKeyword, handleSearch }) {
                 <th className="!p-3">ID</th>
                 <th className="!p-3">TÊN DANH MỤC</th>
                 <th className="!p-3">HÌNH ẢNH</th>
-                <th className="!p-3">DANH MỤC CHUNG</th>
+                <th className="!p-3">DANH MỤC GỐC</th>
                 <th className="!p-3">CHỨC NĂNG</th>
               </tr>
             </thead>
@@ -84,7 +84,11 @@ export default function ManageCategory({ searchKeyword, handleSearch }) {
                   <td className="py-2 !pl-4">
                     <img className=" w-12 zoomable-image" src={cate.imageUrl} />
                   </td>
-                  <td className="py-2 !pl-4">{cate.categoryId !== null ? cate.categoryId.name : "Danh mục chính"}</td>
+                  <td className="py-2 !pl-4">
+                    {cate.categoryId !== null
+                      ? cate.categoryId.name
+                      : "Không"}
+                  </td>
                   <td className="py-2 !pl-4">
                     <ModalUpdateCategory categoryId={cate.id} category={cate} />
                     <ModalDeleteCategory categoryId={cate.id} />
@@ -92,13 +96,15 @@ export default function ManageCategory({ searchKeyword, handleSearch }) {
                 </tr>
               ))}
             </tbody>
-              <PaginationItems
-                array={categories}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-              />
           </Table>
+          <div className="flex justify-center bg-white shadow-md border rounded-lg">
+            <PaginationItems
+              array={categories}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
         </div>
       </div>
     </CategoryContext.Provider>

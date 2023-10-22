@@ -3,7 +3,7 @@ import Step from "./StepBlock";
 
 export default function StepNavigation(props) {
   return (
-    <div className="stepWrapper justify-center w-full">
+    <div className="stepWrapper justify-center w-full ml-52">
       {props.labelArray.map((item, index) => (
         <Step
           key={index}

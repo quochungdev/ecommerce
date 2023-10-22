@@ -28,7 +28,7 @@ export default function ModalDeleteShop({ shopId }) {
       <Button className=" ml-5 mr-5 !bg-button_color" onClick={handleShow}>
         <div className="flex">
           <img className="w-1/3" src={deleteIcon} />
-          <span className="pl-2 w-2/3 font-semibold">Hủy</span>
+          <span className="pl-2 w-2/3 font-semibold">Xóa</span>
         </div>
       </Button>
 

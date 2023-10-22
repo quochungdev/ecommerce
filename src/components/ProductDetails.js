@@ -7,6 +7,8 @@ import { toastError, toastSuccess } from "./Toast";
 import { ToastContainer } from "react-toastify";
 import { MyUserContext } from "../App";
 import cameraIcon from "../assets/image/camera.png";
+import minusIcon from "../assets/image/minus.png";
+import plusIcon from "../assets/image/plus.png";
 import {
   MDBCard,
   MDBCardBody,
@@ -75,11 +77,17 @@ export default function ProductDetails() {
   const loadProductDetail = async () => {
     try {
       let res = await Apis.get(endpoints.view_detail(id));
-      setProductDetail(res.data);
+      const productDetailWithDefaultQuantity = {
+        ...res.data,
+        quantity: 1,
+      };
+      setProductDetail(productDetailWithDefaultQuantity);
     } catch (ex) {
       console.log(ex);
     }
   };
+
+  console.log(productDetail);
 
   let subImageArray = [];
 
@@ -89,12 +97,30 @@ export default function ProductDetails() {
       ...productDetail.imageSet.map((i) => i.imageUrl),
     ];
   }
-  console.log(subImageArray);
 
-  const { dispatch } = useCart();
+  const { cart, dispatch } = useCart();
   const addToCart = () => {
     dispatch({ type: "ADD_TO_CART", payload: productDetail });
     toastSuccess("Đã thêm vào giỏ hàng");
+  };
+
+  const decreaseQuantity = () => {
+    if (productDetail.quantity > 1) {
+      setProductDetail({
+        ...productDetail,
+        quantity: productDetail.quantity - 1,
+      });
+    }
+  };
+
+  const increaseQuantity = () => {
+    if (productDetail.quantity <= productDetail.qty) {
+      // Adjust the maximum quantity as needed
+      setProductDetail({
+        ...productDetail,
+        quantity: productDetail.quantity + 1,
+      });
+    }
   };
 
   useEffect(() => {
@@ -181,6 +207,28 @@ export default function ProductDetails() {
                     {showMore[productDetail.id] ? "Thu gọn" : "Xem thêm"}
                   </a>
                 )}{" "}
+              </div>
+            </div>
+            <div className="flex items-center">
+              <div>Số lượng</div>
+              <div className="p-4 text-xl font-semibold w-1/3 flex h-full">
+                <Button
+                  onClick={decreaseQuantity}
+                  className="w-1/5 bg-white border"
+                >
+                  <img src={minusIcon} />
+                </Button>
+                <input
+                  className="w-2/5 border text-center"
+                  value={productDetail.quantity}
+                  readOnly
+                />
+                <Button
+                  onClick={increaseQuantity}
+                  className="w-1/5 bg-white border"
+                >
+                  <img src={plusIcon} />
+                </Button>
               </div>
             </div>
             <div className="flex my-3">

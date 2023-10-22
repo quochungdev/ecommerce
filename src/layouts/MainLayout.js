@@ -41,6 +41,7 @@ export default function MainLayout({ searchKeyword, handleSearch }) {
         <UserShopContext.Provider value={[shop]}>
           <Header searchKeyword={searchKeyword} handleSearch={handleSearch} />
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/dang-nhap" element={<Login />} />

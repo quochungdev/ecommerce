@@ -3,10 +3,10 @@ import { Button, Image } from "react-bootstrap";
 import CheckIcon from "../../../assets/image/check_icon.png";
 import { MyUserContext } from "../../../App";
 import { UserShopContext } from "../../../layouts/MainLayout";
+import { useNavigate } from "react-router-dom";
 export default function Step2({ currentStep, labelArray, updateStep }) {
-  const [user] = useContext(MyUserContext);
+  const navigate = useNavigate();
   const [shop] = useContext(UserShopContext);
-  console.log(shop);
   //Kiểm tra xem shop có null không
   const isShopAvailable = shop !== null;
   return (
@@ -21,17 +21,8 @@ export default function Step2({ currentStep, labelArray, updateStep }) {
         </p>
       </div>
       <div>
-        <button
-          className="primaryButton"
-          disabled={currentStep === 1}
-          onClick={() => updateStep(currentStep - 1)}
-        >
-          Trở lại
-        </button>
-        <Button
-          className="primaryButton"
-        >
-          Tiếp tục
+        <Button className="!bg-orange-500" onClick={navigate("/home")}>
+          Quay về trang chủ
         </Button>
       </div>
     </>

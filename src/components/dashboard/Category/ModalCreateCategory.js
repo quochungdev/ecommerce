@@ -17,24 +17,25 @@ export default function ModalCreateCategory() {
 
   const [name, setName] = useState("");
   const [image, setImage] = useState(null);
-
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
-    console.log(selectedImage);
   };
 
   const createCategory = async () => {
     const formData = new FormData();
     formData.append("name", name);
+    if (selectedCategory !== null) {
+      formData.append("category_id", selectedCategory);
+    }
     formData.append("imageUrl", image);
     if (!name || !image) {
-      // Kiểm tra nếu name hoặc image không có giá trị, không gửi request
       return;
     }
     try {
       let res = await authApi().post(endpoints["create_category"], formData);
-      setCategories((prev) => [...prev, res.data])
+      setCategories((prev) => [...prev, res.data]);
       console.log(res.data);
       toastSuccess("Thêm thành công");
       handleClose();
@@ -44,6 +45,11 @@ export default function ModalCreateCategory() {
     }
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    setSelectedCategory(selectedCategory || null);
+  };
+  const categoryMain = categories.filter((cate) => cate.categoryId == null);
   return (
     <>
       <Button className="w-24 ml-5 mr-5 !bg-button_color" onClick={handleShow}>
@@ -67,6 +73,25 @@ export default function ModalCreateCategory() {
                 onChange={(e) => setName(e.target.value)}
                 autoFocus
               />
+            </Form.Group>
+            <Form.Group className="mb-3 flex">
+              <Form.Label className="w-1/6 text-center font-semibold">
+                Danh mục gốc
+              </Form.Label>
+              <Form.Control
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+                as="select"
+                defaultValue="Chọn Danh mục"
+                className="!w-5/6"
+              >
+                <option value="">Chọn danh mục gốc</option>
+                {categoryMain.map((cate) => (
+                  <option key={cate.id} value={cate.id}>
+                    {cate.name}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Hình ảnh</Form.Label>

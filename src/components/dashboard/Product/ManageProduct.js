@@ -38,6 +38,11 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
       [prodId]: !prev[prodId],
     }));
   };
+
+  const paginationItem = products.slice(startIndex, endIndex);
+  const filteredItems = paginationItem.filter((item) =>
+    item.name.toLowerCase().includes(searchKeyword.toLowerCase())
+  );
   return (
     <>
       <ToastContainer />
@@ -52,7 +57,7 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
                 type="text"
                 value={searchKeyword}
                 onChange={handleSearch}
-                placeholder="Search Category..."
+                placeholder="Tìm kiếm sản phẩm..."
                 className=" mr-sm-2 "
               />
               <button className="absolute right-0 top-1" type="submit">
@@ -107,7 +112,7 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
               </tr>
             </thead>
             <tbody>
-              {products.map((prod) => (
+              {filteredItems.map((prod) => (
                 <tr key={prod.id}>
                   <td className="py-2 !pl-4">{prod.id}</td>
                   <td className="py-2 !pl-4">{prod.name}</td>
@@ -169,13 +174,15 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
                 </tr>
               ))}
             </tbody>
-            <PaginationItems
-              array={products}
-              itemsPerPage={itemsPerPage}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
           </Table>
+        </div>
+        <div className="flex justify-center bg-white shadow-md border rounded-lg">
+          <PaginationItems
+            array={products}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </div>
     </>

@@ -5,8 +5,10 @@ import Apis, { authApi, endpoints } from "../../../configs/Apis";
 import { toastError, toastSuccess } from "../../Toast";
 import { getProvinces } from "../../../configs/provinceAPI";
 import { getDistrictsByProvince } from "../../../configs/districtAPI";
+import { useNavigate } from "react-router-dom";
 
 export default function Step1({ currentStep, labelArray, updateStep }) {
+  const navigate = useNavigate();
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState({});
   const [selectedProvince, setSelectedProvince] = useState("");
@@ -47,14 +49,6 @@ export default function Step1({ currentStep, labelArray, updateStep }) {
       (district) => district.code == selectedDistrict
     )?.name;
     setAddress(`${homeAddress}, ${districtName}, ${provinceName}`);
-    // // Fetch ward data based on the selected district
-    // getDistrictsByProvince(selectedProvince)
-    //   .then((response) => {
-    //     // Handle the ward data here
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching wards:", error);
-    //   });
   };
 
   const [user] = useContext(MyUserContext);
@@ -140,18 +134,20 @@ export default function Step1({ currentStep, labelArray, updateStep }) {
           Xác nhận
         </Button>
       </div>
-      {showCode && <div className="flex items-center">
-        <Form.Label>Mã xác thực</Form.Label>
+      {showCode && (
+        <div className="flex items-center">
+          <Form.Label>Mã xác thực</Form.Label>
 
-        <Form.Group className="mb-3 px-3">
-          <Form.Control
-            value={codeEmail}
-            onChange={(e) => setCodeEmail(e.target.value)}
-            type="text"
-            autoFocus
-          />
-        </Form.Group>
-      </div>}
+          <Form.Group className="mb-3 px-3">
+            <Form.Control
+              value={codeEmail}
+              onChange={(e) => setCodeEmail(e.target.value)}
+              type="text"
+              autoFocus
+            />
+          </Form.Group>
+        </div>
+      )}
       <Form.Group className="mb-3">
         <Form.Label>Địa chỉ lấy hàng</Form.Label>
         <Form.Control
@@ -216,15 +212,15 @@ export default function Step1({ currentStep, labelArray, updateStep }) {
         <Form.Label>Người tạo</Form.Label>
         <Form.Control value={user.fullName} disabled type="text" autoFocus />
       </Form.Group>
-      <button
+      <Button
+        variant="dark"
         className="primaryButton"
-        disabled={currentStep === 1}
-        onClick={() => updateStep(currentStep - 1)}
+        onClick={() => navigate("/dang-ky-ban-hang")}
       >
         Trở lại
-      </button>
+      </Button>
       <Button
-        className="primaryButton"
+        className="!bg-orange-500 !border-none !font-semibold"
         disabled={currentStep === labelArray.length}
         onClick={createShop}
       >

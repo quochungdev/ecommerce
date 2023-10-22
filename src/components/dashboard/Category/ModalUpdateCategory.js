@@ -13,23 +13,18 @@ export default function ModalUpdateCategory({ categoryId, category }) {
   const [categories, setCategories] = useContext(CategoryContext);
 
   const [name, setName] = useState(category.name);
-  const [selectedCategory, setSelectedCategory] = useState(1);
-  const [selectedSubCategory, setSelectedSubCategory] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [image, setImage] = useState(null);
-
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
-    console.log(selectedImage);
     setImage(selectedImage);
   };
+  console.log(selectedCategory);
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
-    setSelectedCategory(selectedCategory);
+    setSelectedCategory(selectedCategory || null);
   };
-  const handleSubCategoryChange = (e) => {
-    const selectedSubCategory = e.target.value;
-    setSelectedSubCategory(selectedSubCategory);
-  };
+
   const categoryMain = categories.filter((cate) => cate.categoryId == null);
   const subCategory = categories.filter(
     (cate) => cate.categoryId !== null && cate.categoryId.id == selectedCategory
@@ -38,14 +33,14 @@ export default function ModalUpdateCategory({ categoryId, category }) {
   const updateCategory = async (categoryId) => {
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("category_id", selectedSubCategory);
-
+    if(selectedCategory !== null){
+      formData.append("category_id", selectedCategory);
+    }
     if (image) {
       formData.append("imageUrl", image);
     } else {
-      // Nếu không thay đổi thì sử dụng giá trị từ article.thumbnail
-      const blob = await fetch(category.image).then((res) => res.blob());
-      const file = new File([blob], "thumbnail.jpg"); // Đặt tên và loại tệp theo ý muốn
+      const blob = await fetch(category.imageUrl).then((res) => res.blob());
+      const file = new File([blob], "imageUrl.jpg"); // Đặt tên và loại tệp theo ý muốn
       formData.append("imageUrl", file);
     }
 
@@ -94,7 +89,7 @@ export default function ModalUpdateCategory({ categoryId, category }) {
               <Form.Control
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange} // Gọi hàm khi chọn tệp
+                onChange={handleImageChange}
                 placeholder="Chọn file"
               />
               {image && (
@@ -107,37 +102,19 @@ export default function ModalUpdateCategory({ categoryId, category }) {
             </Form.Group>
             <Form.Group className="mb-3 flex">
               <Form.Label className="w-1/6 text-center text-xl font-semibold">
-                Ngành hàng chính
+                Danh mục gốc
               </Form.Label>
               <Form.Control
                 value={selectedCategory}
                 onChange={handleCategoryChange}
                 as="select"
-                defaultValue="Chọn ngành hàng"
+                defaultValue="Chọn danh mục"
                 className="!w-5/6"
               >
-                <option value="">Chọn ngành hàng chính</option>
+                <option value="">Chọn danh mục gốc</option>
                 {categoryMain.map((cate) => (
                   <option key={cate.id} value={cate.id}>
-                    {cate.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group className="mb-3 flex">
-              <Form.Label className="w-1/6 text-center text-xl font-semibold">
-                Ngành hàng phụ
-              </Form.Label>
-              <Form.Control
-                value={selectedSubCategory}
-                onChange={handleSubCategoryChange}
-                as="select"
-                className="!w-5/6"
-              >
-                <option value="">Chọn ngành hàng phụ</option>
-                {subCategory.map((cate) => (
-                  <option key={cate.id} value={cate.id}>
-                    {cate.name}
+                    { cate.name }
                   </option>
                 ))}
               </Form.Control>

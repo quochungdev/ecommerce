@@ -45,7 +45,6 @@ export default function CreateProductComp() {
 
   const createProduct = async () => {
     if (isAddingProduct) {
-      // Nếu đang thêm sản phẩm, chặn hành động
       return;
     }
 
@@ -149,7 +148,7 @@ export default function CreateProductComp() {
           </Form.Group>
           <Form.Group className="mb-3 flex">
             <Form.Label className="w-1/6 text-center text-xl font-semibold">
-              Giá cả
+              Giá
             </Form.Label>
             <Form.Control
               className="!w-5/6"

@@ -47,12 +47,10 @@ export default function UpdateProductComp({ productId, prod, loadProducts }) {
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
-    console.log(selectedImage);
     setImage(selectedImage);
   };
 
   const updateProduct = async (productId) => {
-    console.log(selectedSubCategory);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", desc);
@@ -63,7 +61,6 @@ export default function UpdateProductComp({ productId, prod, loadProducts }) {
     if (image) {
       formData.append("thumbnail", image);
     } else {
-      // Nếu không thay đổi thì sử dụng giá trị từ article.thumbnail
       const blob = await fetch(prod.thumbnail).then((res) => res.blob());
       const file = new File([blob], "thumbnail.jpg"); // Đặt tên và loại tệp theo ý muốn
       formData.append("thumbnail", file);

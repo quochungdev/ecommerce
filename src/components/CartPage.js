@@ -31,6 +31,7 @@ export default function CartPage() {
     };
     dispatch({ type: "UPDATE_CART", payload: updateProduct });
   };
+  
   const handleIncrease = (productId) => {
     const newQuantity =
       cart.find(
@@ -42,7 +43,6 @@ export default function CartPage() {
       quantity: newQuantity,
       total: newQuantity * newPrice,
     };
-    console.log(updateProduct);
     dispatch({ type: "UPDATE_CART", payload: updateProduct });
   };
 
@@ -74,7 +74,6 @@ export default function CartPage() {
       console.log(ex);
     }
   };
-  console.log(cart);
   let totalAmount = cart.reduce((total, product) => total + product.total, 0);
   useEffect(() => {
     loadAddressUser();

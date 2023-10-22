@@ -25,6 +25,13 @@ export default function ManageShop({ searchKeyword, handleSearch }) {
       console.log(ex);
     }
   };
+  const [showMore, setShowMore] = useState({});
+  const toggleShowMore = (prodId) => {
+    setShowMore((prev) => ({
+      ...prev,
+      [prodId]: !prev[prodId],
+    }));
+  };
 
   useEffect(() => {
     loadShops();
@@ -40,7 +47,7 @@ export default function ManageShop({ searchKeyword, handleSearch }) {
       <ToastContainer />
       <div className=" h-full !mx-0">
         <div className=" flex justify-between">
-          <h2>Shop </h2>
+          <h2>Cửa hàng </h2>
         </div>
         <div className="p-2 mt-2 shadow-md rounded-md">
           <div className="relative m-1 w-2/4 ">
@@ -49,7 +56,7 @@ export default function ManageShop({ searchKeyword, handleSearch }) {
                 type="text"
                 value={searchKeyword}
                 onChange={handleSearch}
-                placeholder="Search Shop..."
+                placeholder="Tìm kiếm cửa hàng..."
                 className=" mr-sm-2 "
               />
               <button className="absolute right-0 top-1" type="submit">
@@ -64,7 +71,6 @@ export default function ManageShop({ searchKeyword, handleSearch }) {
               <tr className=" items-center ">
                 <th className="!p-3">ID</th>
                 <th className="!p-3">TÊN SHOP</th>
-                <th className="!p-3">MÔ TẢ</th>
                 <th className="!p-3">ĐỊA CHỈ</th>
                 <th className="!p-3">ẢNH ĐẠI DIỆN</th>
                 <th className="!p-3">TRẠNG THÁI</th>
@@ -77,7 +83,6 @@ export default function ManageShop({ searchKeyword, handleSearch }) {
                 <tr key={shop.id}>
                   <td className="py-2 !pl-4">{shop.id}</td>
                   <td className="py-2 !pl-4">{shop.name}</td>
-                  <td className="py-2 !pl-4">{shop.description}</td>
                   <td className="py-2 !pl-4">{shop.address}</td>
                   <td className="py-2 !pl-4">
                     <img className=" w-12 zoomable-image" src={shop.imageUrl} />
@@ -85,21 +90,27 @@ export default function ManageShop({ searchKeyword, handleSearch }) {
                   <td className="py-2 !pl-4">
                     {shop.status == 0 ? "Chưa kích hoạt" : "Đã kích hoạt"}
                   </td>
-                  <td className="py-2 !pl-4">{shop.userDTO && shop.userDTO.fullName ? shop.userDTO.fullName : ""}</td>
+                  <td className="py-2 !pl-4">
+                    {shop.userDTO && shop.userDTO.fullName
+                      ? shop.userDTO.fullName
+                      : ""}
+                  </td>
                   <td className="py-2 !pl-4 flex">
-                    <ModalActiveShop shopId={shop.id} loadShops={loadShops}/>
+                    <ModalActiveShop shopId={shop.id} loadShops={loadShops} />
                     <ModalDeleteShop shopId={shop.id} />
                   </td>
                 </tr>
               ))}
             </tbody>
+          </Table>
+          <div className="flex justify-center bg-white shadow-md border rounded-lg">
             <PaginationItems
               array={shops}
               itemsPerPage={itemsPerPage}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
-          </Table>
+          </div>
         </div>
       </div>
     </ShopContext.Provider>
