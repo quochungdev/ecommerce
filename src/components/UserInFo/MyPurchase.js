@@ -42,6 +42,7 @@ export default function MyPurchase() {
   useEffect(() => {
     loadOrders();
   }, [status]);
+
   return (
     <>
       <ToastContainer />
@@ -138,15 +139,24 @@ export default function MyPurchase() {
             </div>
           </div>
           <div>
-            <Link className="decoration-transparent" to={`/chi-tiet-san-pham/${order.product.id}`}>
+            <Link
+              className="decoration-transparent"
+              to={`/chi-tiet-san-pham/${order.product.id}`}
+            >
               <div className="border flex justify-between items-center transition-all duration-200 hover:shadow-2xl">
                 <div className="w-3/4 text-xl p-4  flex">
                   <img className="w-28" src={order.product.thumbnail} />
                   <div className="w-full flex flex-col mx-2">
-                    <div className="font-semibold text-gray-500 hover:text-orange-500">{order.product.name}</div>
-                    <div className="text-gray-500">Phân loại hàng: Áo quần</div>
+                    <div className="font-semibold text-gray-500 hover:text-orange-500">
+                      {order.product.name}
+                    </div>
+                    <div className="hover:!text-red-500">
+                      <Link className="decoration-transparent text-gray-500 " to={`/san-pham/${order.product.category.id}`}>Danh mục: {order.product.category.name}</Link>
+                    </div>
                     <div className="flex">
-                      <div className="font-semibold text-gray-500">Số lượng:</div>
+                      <div className="font-semibold text-gray-500">
+                        Số lượng:
+                      </div>
                       <div className="font-semibold px-2 text-red-500">
                         {order.qty}
                       </div>
@@ -154,7 +164,7 @@ export default function MyPurchase() {
                   </div>
                 </div>
                 <div className="w-1/4 text-red-500 text-right text-2xl font-semibold p-4">
-                  $139
+                  ${order.product.price}
                 </div>
               </div>
             </Link>

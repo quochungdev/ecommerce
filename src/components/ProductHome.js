@@ -44,13 +44,15 @@ export default function ProductHome() {
                   >
                     <Card className="items-center bg-white transition-all duration-200 hover:!bg-orange-500 ">
                       <Card.Img
-                        className="!w-2/3"
+                        className="p-3 h-52"
                         variant="top"
                         src={product.thumbnail}
                       />
                       <Card.Title className="text-black mt-3 hover:!text-white w-full">
                         <div className="flex justify-around text-xs">
-                          <div>{product.name}</div>
+                          {product.name && product.name.length >= 12
+                            ? `${product.name.substring(0, 12)}...`
+                            : `${product.name}`}
                           <div className="">Đã bán {product.sold}</div>
                         </div>
                         {/* {product.sold} */}
@@ -65,28 +67,4 @@ export default function ProductHome() {
       </div>
     </div>
   );
-}
-{
-  /* <Carousel slide={false}>
-          {chunkedProducts.map((chunkProd) => (
-            <CarouselItem className="border shadow-md flex h-auto items-center justify-center ">
-              <div className=" w-full h-full flex flex-wrap justify-between ">
-                {chunkProd.map((product) => (
-                  <div className="w-1/6 h-1/2 border shadow-md text-center transition-all duration-200 hover:!bg-gray-200 ">
-                    <Link
-                      key={product.id}
-                      to={`/chi-tiet-san-pham/${product.id}`} // Sử dụng /san-pham/:id
-                      className="!text-black decoration-transparent hover:!text-orange-400"
-                    >
-                      <img className="w-full h-4/5" src={product.thumbnail} />
-                      <div className="w-full h-1/5 font-semibold px-2 pt-2">
-                        {product.name}
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </CarouselItem>
-          ))}
-        </Carousel> */
 }

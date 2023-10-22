@@ -36,7 +36,7 @@ export default function ManageVoucher({ searchKeyword, handleSearch }) {
       <ToastContainer />
       <div className=" h-full !mx-0">
         <div className="flex justify-between">
-          <h2 className="">Vouchers</h2>
+          <h2 className="">Mã khuyến mãi</h2>    
           <ModalCreateVoucher loadVouchers={loadVouchers} />
         </div>
         <div className="p-2 mt-2 shadow-md rounded-md">
@@ -60,7 +60,7 @@ export default function ManageVoucher({ searchKeyword, handleSearch }) {
             <thead className="">
               <tr className=" items-center ">
                 <th className="!p-3">ID</th>
-                <th className="!p-3">VOUCHER</th>
+                <th className="!p-3">MÃ KHUYẾN MÃI</th>
                 <th className="!p-3">SỐ LƯỢNG</th>
                 <th className="!p-3">CODE</th>
                 <th className="!p-3">GIÁ TRỊ</th>

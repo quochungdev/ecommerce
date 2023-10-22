@@ -139,7 +139,7 @@ export default function SideNav() {
                 } `}
                 to="/admin/vouchers"
               >
-                Vouchers
+                Mã khuyến mãi
               </Link>
             </div>
           </Nav>

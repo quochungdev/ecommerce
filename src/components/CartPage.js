@@ -31,7 +31,7 @@ export default function CartPage() {
     };
     dispatch({ type: "UPDATE_CART", payload: updateProduct });
   };
-  
+
   const handleIncrease = (productId) => {
     const newQuantity =
       cart.find(
@@ -152,6 +152,7 @@ export default function CartPage() {
           </div>
         </div>
         <div className="container mt-3 bg-white flex justify-around border">
+          <div className="p-4 text-xl font-bold">Hình Ảnh</div>
           <div className="p-4 text-xl font-bold">Sản Phẩm</div>
           <div className="p-4 text-xl font-bold">Đơn Giá</div>
           <div className="p-4 text-xl font-bold">Số Lượng</div>
@@ -161,18 +162,24 @@ export default function CartPage() {
         <div className="mt-3">
           {cart.length > 0 ? (
             cart.map((c) => (
-              <div className="container bg-white flex justify-around border">
+              <div className="container bg-white flex justify-between border">
                 <>
-                  <div className="p-4 text-xl font-semibold flex w-1/5">
-                    <div>
+                  <div className="p-4 w-1/6 text-xl font-semibold ">
+                    <div className="w-full">
                       <img className="h-3/5" src={c.thumbnail} />
                     </div>
-                    <div className="">{c.name}</div>
                   </div>
-                  <div className="p-4 text-xl text-center font-semibold w-1/5">
+                  <div className="p-4 w-1/6 text-xl font-semibold">
+                    <div className="w-full">
+                      {c.name && c.name.length >= 25
+                        ? `${c.name.substring(0, 25)}...`
+                        : `${c.name}`}
+                    </div>
+                  </div>
+                  <div className="p-4 w-1/6 text-xl text-center font-semibold ">
                     ${c.price}
                   </div>
-                  <div className="p-4 text-xl font-semibold w-1/5 flex h-full">
+                  <div className="p-4 w-1/6 text-xl font-semibold  flex h-full">
                     <Button
                       onClick={() => handleDecrease(c.id)}
                       className="w-1/5 bg-white border"
@@ -195,10 +202,10 @@ export default function CartPage() {
                       <img src={plusIcon} />
                     </Button>
                   </div>
-                  <div className="p-4 text-xl text-center text-red-500 font-semibold w-1/5">
+                  <div className="p-4 w-1/6 text-xl text-center text-red-500 font-semibold ">
                     ${c.total}
                   </div>
-                  <div className="p-4 text-xl text-center font-bold w-1/5">
+                  <div className="p-4 w-1/6 text-xl text-center font-bold ">
                     <Button
                       className="w-24 ml-5 mr-5 p-3 !bg-red-600 !border-none transition-all duration-200 hover:!bg-red-400"
                       onClick={() => handleRemoveFromCart(c.id)}
@@ -265,9 +272,7 @@ export default function CartPage() {
                 variant="none"
                 className={`p-4 mx-3 text-xl text-black bg-red-400 !font-bold !border !border-red-500 flex
                 transition-all duration-200 hover:!bg-red-400 ${
-                  selectedPaymentId?.id === p.id
-                    ? "!bg-red-500  !border "
-                    : ""
+                  selectedPaymentId?.id === p.id ? "!bg-red-500  !border " : ""
                 }`}
                 onClick={() => {
                   setSelectedPaymentId(p);

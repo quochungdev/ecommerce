@@ -49,8 +49,8 @@ export default function Category() {
                         variant="top"
                         src={cate.imageUrl}
                       />
-                      <Card.Title className="text-black">
-                        <h6>{cate.name}</h6>
+                      <Card.Title className="text-black !text-xs">
+                        <span>{cate.name}</span>
                       </Card.Title>
                     </Card>
                   </Link>

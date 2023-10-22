@@ -38,7 +38,11 @@ function CartDropdown() {
                 <div className="">
                   <Image className="w-20" src={c.thumbnail} />
                 </div>
-                <div className=" font-semibold">{c.name}</div>
+                <div className=" font-semibold">
+                {c.name && c.name.length >= 12
+                            ? `${c.name.substring(0, 12)}...`
+                            : `${c.name}`}
+                </div>
                 <div className="text-xl text-red-600 font-semibold mr-3">
                   ${c.price}
                 </div>
