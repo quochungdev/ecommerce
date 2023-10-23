@@ -39,11 +39,11 @@ export default function Overview() {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex w-full">
         <BarChartMonth />
         <BarChartQuarter />
       </div>
-      <div className="m-3 w-auto container rounded-xl p-3 bg-white shadow-md chart-container">
+      <div className="m-3 w-full rounded-xl p-3 bg-white shadow-md chart-container">
         <h4 className="text-center text-gray-400 font-bold">
           {`TỔNG DOANH THU SẢN PHẨM THEO THÁNG ${
             time ? `${time.$M + 1}/${time.$y}` : ""

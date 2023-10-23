@@ -8,9 +8,9 @@ export default function SideNav() {
 
   return (
     <>
-      <div className="bg-sidenav_background w-1/5 min-h-screen">
+      <div className="bg-sidenav_background w-1/6 min-h-screen">
         <div className="text-center p-3">
-          <h3 className="text-white">Trang quản trị viên</h3>
+          <h4 className="text-white">Trang quản trị viên</h4>
         </div>
 
         <hr className="text-white border-solid border" />
@@ -19,17 +19,17 @@ export default function SideNav() {
           <Nav className="flex flex-col px-4 py-3 h-full ">
             <div
               className={`flex mb-3 p-2 hover:bg-slate-600 ${
-                location.pathname === "/admin/category" ? "bg-slate-600  " : ""
+                location.pathname === "/admin/overview" ? "bg-slate-600  " : ""
               }`}
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
-                  location.pathname === "/admin/category"
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
+                  location.pathname === "/admin/overview"
                     ? "text-white !font-bold"
                     : ""
                 } `}
-                to="/admin/category"
+                to="/admin/overview"
               >
                 Tổng quan
               </Link>
@@ -37,12 +37,12 @@ export default function SideNav() {
 
             <div
               className={`flex mb-3 p-2 hover:bg-slate-600 ${
-                location.pathname === "/admin/overview" ? "bg-slate-600  " : ""
+                location.pathname === "/admin/banner" ? "bg-slate-600  " : ""
               }`}
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
                   location.pathname === "/admin/banner"
                     ? "text-white !font-bold"
                     : ""
@@ -60,7 +60,7 @@ export default function SideNav() {
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
                   location.pathname === "/admin/category"
                     ? "text-white !font-bold"
                     : ""
@@ -78,7 +78,7 @@ export default function SideNav() {
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
                   location.pathname === "/admin/product"
                     ? "text-white !font-bold"
                     : ""
@@ -96,7 +96,7 @@ export default function SideNav() {
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
                   location.pathname === "/admin/shop"
                     ? "text-white !font-bold"
                     : ""
@@ -114,7 +114,7 @@ export default function SideNav() {
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
                   location.pathname === "/admin/users"
                     ? "text-white !font-bold"
                     : ""
@@ -132,7 +132,7 @@ export default function SideNav() {
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
                   location.pathname === "/admin/payments"
                     ? "text-white !font-bold"
                     : ""
@@ -150,7 +150,7 @@ export default function SideNav() {
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
-                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  ${
                   location.pathname === "/admin/vouchers"
                     ? "text-white !font-bold"
                     : ""

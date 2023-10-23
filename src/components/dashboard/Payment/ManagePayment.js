@@ -39,22 +39,7 @@ export default function ManagePayment({ searchKeyword, handleSearch }) {
           <h2 className="">Phương thức thanh toán</h2>
           <ModalCreatePayment loadPayments={loadPayments} />
         </div>
-        <div className="p-2 mt-2 shadow-md rounded-md">
-          <div className="relative m-1 w-2/4 ">
-            <Form>
-              <Form.Control
-                type="text"
-                value={searchKeyword}
-                onChange={handleSearch}
-                placeholder="Tìm kiếm người dùng..."
-                className=" mr-sm-2 "
-              />
-              <button className="absolute right-0 top-1" type="submit">
-                <img src={searchIcon} />
-              </button>
-            </Form>
-          </div>
-        </div>
+       
         <div className=" mt-3">
           <Table className="table-custom shadow-md" striped hover size="sm">
             <thead className="">

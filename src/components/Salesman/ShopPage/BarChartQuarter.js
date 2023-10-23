@@ -30,7 +30,7 @@ export const BarChartQuarter = () => {
         </div>
 
       </div>
-      <h2 style={{ textAlign: "center" }}>Sales</h2>
+      <h2 style={{ textAlign: "center" }}>Thống kê</h2>
       <Scatter
         data={{
           labels: stats.map((data) => `Quý ${data.odQuarter}`),

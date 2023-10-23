@@ -35,24 +35,14 @@ export default function ManageBanner({ searchKeyword, handleSearch }) {
           <h2 className="">Banners</h2>
           <ModalCreateBanner loadBanners={loadBanners} />
         </div>
-        <div className="p-2 mt-2 shadow-md rounded-md">
-          <div className="relative m-1 w-2/4 ">
-            <Form>
-              <Form.Control
-                type="text"
-                value={searchKeyword}
-                onChange={handleSearch}
-                placeholder="Tìm kiếm người dùng..."
-                className=" mr-sm-2 "
-              />
-              <button className="absolute right-0 top-1" type="submit">
-                <img src={searchIcon} />
-              </button>
-            </Form>
-          </div>
-        </div>
+       
         <div className=" mt-3">
-          <Table className="table-custom shadow-md" striped hover size="sm">
+          <Table
+            className="table-custom shadow-md flex items-center"
+            striped
+            hover
+            size="sm"
+          >
             <thead className="">
               <tr className=" items-center ">
                 <th className="!p-3">ID</th>
@@ -62,21 +52,25 @@ export default function ManageBanner({ searchKeyword, handleSearch }) {
             </thead>
             <tbody>
               {banners.map((u) => (
-                <tr key={u.id}>
-                  <td className="py-2 !pl-4">{u.id}</td>
-                  <td className="py-2 !pl-4">
-                    <img className=" w-20 zoomable-image" src={u.imageUrl} />
+                <tr className="h-full" key={u.id}>
+                  <td className="py-2 flex justify-center w-full h-52">
+                    <div className="mt-12">{u.id}</div>
                   </td>
                   <td className="py-2 !pl-4">
-                    <ModalUpdateBanner
-                      bannerId={u.id}
-                      loadBanners={loadBanners}
-                      banner={u}
-                    />
-                    <ModalDeleteBanner
-                      bannerId={u.id}
-                      loadBanners={loadBanners}
-                    />
+                    <img className="w-60 zoomable-image" src={u.imageUrl} />
+                  </td>
+                  <td className="py-2 !pl-4 ">
+                    <div className="mt-12">
+                      <ModalUpdateBanner
+                        bannerId={u.id}
+                        loadBanners={loadBanners}
+                        banner={u}
+                      />
+                      <ModalDeleteBanner
+                        bannerId={u.id}
+                        loadBanners={loadBanners}
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}

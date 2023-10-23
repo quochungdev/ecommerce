@@ -12,35 +12,17 @@ export default function CustomSideNav({ nav }) {
       >
         <button
           class={`outline-none focus:outline-none rounded-sm flex items-center min-w-32  ${
-            location.pathname === nav.link ? "bg-lime-600" : ""
+            location.pathname === nav.link ? "bg-blue-300" : ""
           }
         `}
         >
           <span class="pr-1 font-semibold text-xs ">{nav.navName}</span>
-          {/*  Mũi tên */}
-          {/* {nav.parent ? (
-            <span>
-              <svg
-                class="fill-current h-4 w-4 transform group-hover:-rotate-180
-                                                    transition duration-150 ease-in-out"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </span>
-          ) : null} */}
         </button>
       </Link>
       <ul
         class="z-30 px-0 bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
          transition duration-150 ease-in-out origin-top min-w-32"
       >
-        {/* {nav.parent
-          ? nav.parent.map((nav) =>
-              nav.children ? <LiNotNull nav={nav} /> : <LiNull nav={nav} />
-            )
-          : null} */}
       </ul>
     </div>
   );

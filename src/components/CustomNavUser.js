@@ -24,7 +24,7 @@ export default function CustomNavUser({ nav }) {
           ) : null}
         </button>
       </Link>
-      <ul
+      <ul style={{ top: '85px' }}
         class="z-30 px-0 bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
                                         transition duration-150 ease-in-out origin-top min-w-32"
       >

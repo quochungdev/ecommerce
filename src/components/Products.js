@@ -188,7 +188,7 @@ export default function Products() {
             >
               <Card className="items-start">
                 <Card.Img
-                  className="w-full3"
+                  className="w-full"
                   variant="top"
                   src={product.thumbnail}
                 />

@@ -106,7 +106,7 @@ export default function SearchPage() {
                     Thông tin cửa hàng
                   </h2>
                 </div>
-                <div className="flex items-center pb-5">
+                <div className="flex ml-3 items-center pb-5">
                   <div className="w-1/12">
                     <Image
                       className=""
@@ -149,11 +149,11 @@ export default function SearchPage() {
                   >
                     <Card className="items-start transition-all duration-200 hover:!bg-gray-300 hover:border hover:border-solid hover:!border-red-500 hover:shadow-lg">
                       <Card.Img
-                        className="w-full3"
+                        className="!w-full h-52"
                         variant="top"
                         src={product.thumbnail}
                       />
-                      <Card.Body className="">
+                      <Card.Body className="h-36">
                         <Card.Title>
                           {product.name && product.name.length >= 12
                             ? `${product.name.substring(0, 12)}...`

@@ -36,7 +36,7 @@ export default function ManageVoucher({ searchKeyword, handleSearch }) {
       <ToastContainer />
       <div className=" h-full !mx-0">
         <div className="flex justify-between">
-          <h2 className="">Mã khuyến mãi</h2>    
+          <h2 className="">Mã khuyến mãi</h2>
           <ModalCreateVoucher loadVouchers={loadVouchers} />
         </div>
         <div className="p-2 mt-2 shadow-md rounded-md">
@@ -46,7 +46,7 @@ export default function ManageVoucher({ searchKeyword, handleSearch }) {
                 type="text"
                 value={searchKeyword}
                 onChange={handleSearch}
-                placeholder="Tìm kiếm người dùng..."
+                placeholder="Tìm kiếm voucher..."
                 className=" mr-sm-2 "
               />
               <button className="absolute right-0 top-1" type="submit">

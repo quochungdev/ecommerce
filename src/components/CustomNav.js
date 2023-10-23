@@ -26,7 +26,7 @@ export default function CustomNav({ nav }) {
       </Link>
       <div style={{ left: '-52rem' }}  className="absolute -left-96 top-16">
         <ul
-         style={{ width: '1500px' }}  class=" h-auto flex bg-white z-30 px-0  border rounded-sm transform scale-0 group-hover:scale-100 absolute 
+         style={{ width: '1500px' }}  class=" h-auto flex bg-white z-30 px-0 rounded-sm transform scale-0 group-hover:scale-100 absolute 
                                         transition duration-150 ease-in-out origin-top custom-nav-header flex-wrap"
         >
           {nav.parent

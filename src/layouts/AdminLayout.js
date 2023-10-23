@@ -16,9 +16,9 @@ export default function AdminLayout({searchKeyword, handleSearch}) {
   return (
     <div className="flex w-full h-full">
       <SideNav />
-      <div className=" w-4/5 min-h-screen">
+      <div className=" w-5/6 min-h-screen">
         <HeaderAdmin />
-        <div className=" w-full container mt-16">
+        <div className="w-full container mt-16">
         <Routes>
           <Route path="/overview" element={<Overview />} />
           <Route path="/category" element={<ManageCategory searchKeyword={searchKeyword} handleSearch={handleSearch} />} />

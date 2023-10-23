@@ -53,7 +53,7 @@ export default function ProductDetails() {
   const changeBorderImage = (index) => {
     setSelectedImageIndex(index);
   };
-  
+
   const createReview = async () => {
     if (isAdding) {
       return;
@@ -196,15 +196,17 @@ export default function ProductDetails() {
             </Carousel>
           </div>
           <div className="w-3/5 h-full p-3">
-            <div className="text-2xl font-semibold">{productDetail.name}</div>
-            <div className="flex">
+            <div className="text-2xl ml-2 font-semibold">
+              {productDetail.name}
+            </div>
+            <div className="flex ml-2">
               <div className="text-red-600 text-4xl font-semibold">{`$${productDetail.price}`}</div>
             </div>
             <div className="w-full h-full mt-4">
-              <h3 className="m-3 p-3 bg-gray-100 font-semibold">
+              <h5 className="py-3 px-2 bg-gray-100 font-semibold">
                 MÔ TẢ SẢN PHẨM
-              </h3>
-              <div>
+              </h5>
+              <div className="ml-2">
                 {showMore[productDetail.id] ? (
                   <div
                     className="rendered-content"
@@ -216,21 +218,21 @@ export default function ProductDetails() {
                   <div
                     className="rendered-content"
                     dangerouslySetInnerHTML={{
-                      __html: productDetail.description?.substring(0, 520),
+                      __html: productDetail.description?.substring(0, 255),
                     }}
                   />
                 )}
-                {productDetail.description?.length > 180 && (
+                {productDetail.description?.length > 255 && (
                   <a
-                    className="decoration-emerald-500 pl-5"
+                    className="decoration-emerald-500"
                     onClick={() => toggleShowMore(productDetail.id)}
                   >
                     {showMore[productDetail.id] ? "Thu gọn" : "Xem thêm"}
                   </a>
-                )}{" "}
+                )}
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex ml-2 items-center">
               <div>Số lượng</div>
               <div className="p-4 text-xl font-semibold w-1/3 flex h-full">
                 <Button
@@ -252,7 +254,7 @@ export default function ProductDetails() {
                 </Button>
               </div>
             </div>
-            <div className="flex my-3">
+            <div className="flex my-3 ml-2">
               <Link to={!user && "/dang-nhap"}>
                 <Button variant="dark" className="p-3" onClick={addToCart}>
                   Mua ngay
@@ -288,7 +290,12 @@ export default function ProductDetails() {
                 Chat ngay
               </Button>
               <Button className="border px-3 !font-semibold" variant="light">
-                <Link to={`/shop/${productDetail.shop?.id}`} className="decoration-transparent !text-black">Xem shop</Link>
+                <Link
+                  to={`/shop/${productDetail.shop?.id}`}
+                  className="decoration-transparent !text-black"
+                >
+                  Xem shop
+                </Link>
               </Button>
             </div>
           </div>

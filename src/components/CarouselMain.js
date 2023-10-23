@@ -12,7 +12,7 @@ export default function CarouselMain() {
     loadBanners();
   }, []);
   return (
-      <Carousel className="w-full">
+      <Carousel className="mt-5 container h-full !px-0">
         {banners.map((banner, index) => (
           <Carousel.Item key={index}>
             <img className="w-full" src={banner.imageUrl} />

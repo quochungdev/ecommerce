@@ -9,7 +9,9 @@ import PaginationItems from "../../PaginationItems";
 
 export default function ProductByShop({ searchKeyword, handleSearch }) {
   const [products, setProducts] = useState([]);
-  const [status, setStatus] = useState(0)
+  const [status, setStatus] = useState(0);
+  const [showMore, setShowMore] = useState({});
+
   const loadProducts = async () => {
     try {
       let res = await authApi().get(endpoints.products_shop(status));
@@ -21,6 +23,13 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
   useEffect(() => {
     loadProducts();
   }, [status]);
+
+  const toggleShowMore = (prodId) => {
+    setShowMore((prev) => ({
+      ...prev,
+      [prodId]: !prev[prodId],
+    }));
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -60,8 +69,8 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
             <div className="border flex items-center p-2">
               <Button
                 variant="light"
-                className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold ${
-                  status === 0 ? "!bg-yellow-500" : ""
+                className={`w-2/12 mx-3 p-3 border shadow-md !font-semibold ${
+                  status === 0 ? "!bg-yellow-500 !text-white" : ""
                 }`}
                 onClick={() => setStatus(0)}
               >
@@ -69,8 +78,8 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
               </Button>
               <Button
                 variant="light"
-                className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold  ${
-                  status === 1 ? "!bg-green-500" : ""
+                className={`w-2/12 mx-3  p-3 border shadow-md !font-semibold  ${
+                  status === 1 ? "!bg-green-500 !text-white" : ""
                 }`}
                 onClick={() => setStatus(1)}
               >
@@ -78,8 +87,8 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
               </Button>
               <Button
                 variant="light"
-                className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold  ${
-                  status === 2 ? "!bg-red-500" : ""
+                className={`w-2/12 mx-3 p-3 border shadow-md !font-semibold  ${
+                  status === 2 ? "!bg-red-500 !text-white" : ""
                 }`}
                 onClick={() => setStatus(2)}
               >
@@ -106,7 +115,19 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
                 {filteredItems.map((prod) => (
                   <tr key={prod.id}>
                     <td className="py-2 !pl-4">{prod.id}</td>
-                    <td className="py-2 !pl-4">{prod.name}</td>
+                    <td className="py-2 !pl-4">
+                      {showMore[prod.id]
+                        ? `${prod.name.substring(0, 18)}...`
+                        : `${prod.name}`}
+                      {prod.name && prod.name?.length > 18 && (
+                        <a
+                          className="decoration-emerald-500 pl-5"
+                          onClick={() => toggleShowMore(prod.id)}
+                        >
+                          {showMore[prod.id] ? "Xem thêm" : "Thu gọn"}
+                        </a>
+                      )}
+                    </td>
                     <td className="py-2 !pl-4">${prod.price}</td>
                     <td className="py-2 !pl-4">{prod.qty}</td>
                     <td className="py-2 !pl-4">{prod.category.name}</td>

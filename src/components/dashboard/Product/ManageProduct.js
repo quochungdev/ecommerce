@@ -50,7 +50,7 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
       <ToastContainer />
       <div className=" h-full !mx-0">
         <div className="flex justify-between">
-          <h2 className="">Danh mục</h2>
+          <h2 className="">Sản phẩm</h2>
         </div>
         <div className="p-2 mt-2 shadow-md rounded-md">
           <div className="relative m-1 w-2/4 ">
@@ -72,8 +72,8 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
           <div className="border flex items-center p-2">
             <Button
               variant="light"
-              className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold ${
-                status === 0 ? "!bg-yellow-500" : ""
+              className={`w-2/12 mx-3  p-3 border shadow-md !font-semibold ${
+                status === 0 ? "!bg-yellow-500 !text-white" : ""
               }`}
               onClick={() => setStatus(0)}
             >
@@ -81,8 +81,8 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
             </Button>
             <Button
               variant="light"
-              className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold  ${
-                status === 1 ? "!bg-green-500" : ""
+              className={`w-2/12 mx-3  p-3 border shadow-md !font-semibold  ${
+                status === 1 ? "!bg-green-500 !text-white" : ""
               }`}
               onClick={() => setStatus(1)}
             >
@@ -90,8 +90,8 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
             </Button>
             <Button
               variant="light"
-              className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold  ${
-                status === 2 ? "!bg-red-500" : ""
+              className={`w-2/12 mx-3  p-3 border shadow-md !font-semibold  ${
+                status === 2 ? "!bg-red-500 !text-white" : ""
               }`}
               onClick={() => setStatus(2)}
             >
@@ -132,13 +132,13 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
                       <div
                         className="rendered-content"
                         dangerouslySetInnerHTML={{
-                          __html: prod.description.substring(0, 150),
+                          __html: prod.description.substring(0, 18),
                         }}
                       />
                     )}
-                    {prod.description.length > 150 && (
+                    {prod.description.length > 18 && (
                       <a
-                        className="decoration-emerald-500 pl-5"
+                        className="decoration-emerald-500"
                         onClick={() => toggleShowMore(prod.id)}
                       >
                         {showMore[prod.id] ? "Thu gọn" : "Xem thêm"}

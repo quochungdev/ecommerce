@@ -35,8 +35,8 @@ export default function SideNav() {
   ];
   return (
     <>
-      <div className="bg-orange-100 border m-3 shadow-md w-1/6 min-h-screen">
-        <div className="bg-orange-500  text-center p-3">
+      <div className="bg-white border m-3 shadow-md w-1/6 min-h-screen">
+        <div className="bg-gray-500  text-center p-3">
           <h3 className="text-white">Kênh người bán</h3>
         </div>
 
@@ -49,7 +49,7 @@ export default function SideNav() {
                 <div
                   key={nav.id}
                   className={`flex p-2 mb-3 px-3   ${
-                    location.pathname === nav.link ? "bg-lime-600" : ""
+                    location.pathname === nav.link ? "bg-blue-300" : ""
                   } `}
                 >
                   <img className="bg-button_color w-auto" src={overvewIcon} />
@@ -63,7 +63,7 @@ export default function SideNav() {
                           <Link
                             className={`decoration-transparent text-black font-semibold text-xs ${
                               location.pathname === nav.link
-                                ? "bg-lime-600"
+                                ? "bg-blue-300"
                                 : ""
                             }`}
                             to={nav.link}

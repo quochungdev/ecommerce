@@ -58,8 +58,8 @@ export default function MyPurchase() {
         <div className=" flex items-center p-2">
           <Button
             variant="light"
-            className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold  ${
-              status === 0 ? "!bg-red-500" : ""
+            className={`w-2/12 mx-3 p-3 border shadow-md !font-semibold  ${
+              status === 0 ? "!bg-red-500 text-white" : ""
             }`}
             onClick={() => setStatus(0)}
           >
@@ -67,8 +67,8 @@ export default function MyPurchase() {
           </Button>
           <Button
             variant="light"
-            className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold ${
-              status === 1 ? "!bg-yellow-500" : ""
+            className={`w-2/12 mx-3 p-3 border shadow-md !font-semibold ${
+              status === 1 ? "!bg-yellow-500 text-white " : ""
             }`}
             onClick={() => setStatus(1)}
           >
@@ -76,8 +76,8 @@ export default function MyPurchase() {
           </Button>
           <Button
             variant="light"
-            className={`w-2/12 mx-3 text-black p-3 border shadow-md !font-semibold  ${
-              status === 2 ? "!bg-green-500" : ""
+            className={`w-2/12 mx-3 p-3 border shadow-md !font-semibold  ${
+              status === 2 ? "!bg-green-500 text-white" : ""
             }`}
             onClick={() => setStatus(2)}
           >

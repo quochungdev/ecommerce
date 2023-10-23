@@ -29,14 +29,14 @@ const Login = () => {
         let { data } = await authApi().get(endpoints["current-user"]);
         cookie.save("user", data);
         console.info(data);
-        toastSuccess("Đăng nhập thành công")
+        toastSuccess("Đăng nhập thành công");
         dispatch({
           type: "login",
           payload: data,
         });
         navigate("/home");
       } catch (ex) {
-        toastError("Tài khoản hoặc mật khẩu không chính xác")
+        toastError("Tài khoản hoặc mật khẩu không chính xác");
         console.error(ex);
       }
     };
@@ -49,7 +49,7 @@ const Login = () => {
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <div className="bg-orange-600">
         <MDBContainer className="gradient-form ">
           <MDBRow>
@@ -120,7 +120,7 @@ const Login = () => {
                         className="w-1/6 mr-2"
                         src="https://cdn-icons-png.flaticon.com/512/4902/4902301.png?ga=GA1.1.483303112.1686631307"
                       />
-                      <div className="font-bold">Facebook</div>
+                      <div className="font-bold mt-1">Facebook</div>
                     </Button>
                   </Col>
                   <Col>
@@ -137,7 +137,7 @@ const Login = () => {
                   </Col>
                 </Row>
                 <div className="d-flex flex-row align-items-center justify-content-center">
-                  <p className="mb-0 text-gray-400">Bạn mới đến shopee?</p>
+                  <p className="mb-0 text-gray-400">Bạn mới đến Magento?</p>
                   <Link
                     to="/dang-ky"
                     className="text-orange-500 font-bold decoration-transparent ml-2"
