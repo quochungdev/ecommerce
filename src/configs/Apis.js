@@ -2,14 +2,14 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 
-// const SERVER_CONTEXT = "/support_system";
-const SERVER = "http://localhost:8084";
+const SERVER = "http://localhost:8083";
 
 export const endpoints = {
     "signin": `/api/signin/`,
     "register": `/api/register/`,
     "current-user": `/api/user/profile/`,
     "user": `/api/admin/users/`,
+    "user_change_status": `/api/user/change-status/`,
 
     "categories":  `/api/categories/`,
     "create_category":  `/api/admin/create_category/`,
@@ -17,6 +17,9 @@ export const endpoints = {
     "delete_category": (categoryId) => `/api/admin/delete_category/${categoryId}/`,
 
     "banners":  `/api/admin/banners/`,
+    "create_banner": `/api/admin/create_banner/`,
+    "update_banner":   (id) => `/api/admin/update_banner/${id}/`,
+    "delete_banner": (id) => `/api/admin/delete_banner/${id}/`,
 
     "verify_mail":`/api/shop/verify-mail/`,
     "role_shop": `/api/shop/manage-shop/`,

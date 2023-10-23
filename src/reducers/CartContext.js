@@ -39,6 +39,8 @@ export function CartProvider({ children }) {
               total: action.payload.price * addQuantity,
             },
           ];
+      case "DELETE_CART": 
+          return state = []
 
       case "UPDATE_CART":
         return state.map((product) =>

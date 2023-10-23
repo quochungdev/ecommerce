@@ -15,16 +15,20 @@ export default function Category() {
   }, []);
 
   // Chia danh sách thành các phần con chứa tối đa 12 mục
-  const chunkedCategories = categories.reduce((resultArray, item, index) => {
-    const chunkIndex = Math.floor(index / 12);
+  const categoriesMain = categories.filter((cate) => cate.categoryId === null);
+  const chunkedCategories = categoriesMain.reduce(
+    (resultArray, item, index) => {
+      const chunkIndex = Math.floor(index / 12);
 
-    if (!resultArray[chunkIndex]) {
-      resultArray[chunkIndex] = []; // Bắt đầu một phần con mới nếu cần
-    }
+      if (!resultArray[chunkIndex]) {
+        resultArray[chunkIndex] = []; // Bắt đầu một phần con mới nếu cần
+      }
 
-    resultArray[chunkIndex].push(item);
-    return resultArray;
-  }, []);
+      resultArray[chunkIndex].push(item);
+      return resultArray;
+    },
+    []
+  );
 
   return (
     <div className="mt-5 container h-full !px-0">

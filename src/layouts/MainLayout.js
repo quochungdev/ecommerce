@@ -17,6 +17,7 @@ import PersonalInfo from "../components/UserInFo/PersonalInfo";
 import PaymentSuccess from "../components/PaymentSuccess";
 import Footer from "../pages/Footer";
 import SearchPage from "../components/SearchPage";
+import Shop from "../components/Shop";
 
 export const UserShopContext = createContext();
 
@@ -48,6 +49,7 @@ export default function MainLayout({ searchKeyword, handleSearch }) {
             <Route path="/dang-ky" element={<Register />} />
             <Route path="/san-pham/:id" element={<Products />} />
             <Route path="/chi-tiet-san-pham/:id" element={<ProductDetails />} />
+            <Route path="/shop/:shopId" element={<Shop />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/cart/success" element={<PaymentSuccess />} />
             <Route path="/dang-ky-ban-hang" element={<Onboarding />} />

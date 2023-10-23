@@ -50,6 +50,7 @@ export default function CartPage() {
   const [userAddress, setUserAddress] = useState(null);
   const [vouchers, setVouchers] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [cartPay, setCartPay] = useState([]);
   const loadVouchers = async () => {
     try {
       let res = await Apis.get(endpoints["vouchers"]);
@@ -105,8 +106,9 @@ export default function CartPage() {
         voucher: selectedVoucherId,
         address: selectedAddress.id,
       });
-      console.log(res.data);
+      setIsAddingOrder(false);
       localStorage.removeItem(`cart_${user.id}`);
+      dispatch({ type: "DELETE_CART" });
       toastSuccess("Thanh toán thành công");
       navigate("/cart/success");
     } catch (error) {
@@ -123,9 +125,9 @@ export default function CartPage() {
     toastSuccess("Đã xóa sản phẩm");
   };
 
-  let totalCart =
-    selectedVoucherId &&
-    totalAmount - totalAmount * (selectedVoucherId.value / 100);
+  let totalCart = selectedVoucherId
+    ? totalAmount - totalAmount * (selectedVoucherId.value / 100)
+    : totalAmount;
   return (
     <div className="mb-10">
       <div className="bg-orange-300 h-20 flex items-center">

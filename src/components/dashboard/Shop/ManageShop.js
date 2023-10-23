@@ -95,7 +95,7 @@ export default function ManageShop({ searchKeyword, handleSearch }) {
                       ? shop.userDTO.fullName
                       : ""}
                   </td>
-                  <td className="py-2 !pl-4 flex">
+                  <td className="py-3 !pl-4 flex h-full w-full">
                     <ModalActiveShop shopId={shop.id} loadShops={loadShops} />
                     <ModalDeleteShop shopId={shop.id} />
                   </td>

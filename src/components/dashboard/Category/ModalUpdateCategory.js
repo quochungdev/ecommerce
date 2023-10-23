@@ -19,7 +19,6 @@ export default function ModalUpdateCategory({ categoryId, category }) {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
   };
-  console.log(selectedCategory);
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
     setSelectedCategory(selectedCategory || null);

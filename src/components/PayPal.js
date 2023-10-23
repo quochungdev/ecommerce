@@ -8,7 +8,6 @@ export default function Paypal( {buyOrder, totalCart, checkAddress, checkPayment
   const paypal = useRef();
   const { cart } = useCart();
   const [isPaymentComplete, setPaymentComplete] = useState(false);
-
   // Tính tổng tiền của tất cả các đơn hàng trong giỏ hàng
   const totalAmount = cart.reduce((total, order) => total + order.total, 0);
 

@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 // export const CategoryReducers = createContext();
 
 export default function ManageProduct({ searchKeyword, handleSearch }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
@@ -117,7 +117,11 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
               {filteredItems.map((prod) => (
                 <tr key={prod.id}>
                   <td className="py-2 !pl-4">{prod.id}</td>
-                  <td className="py-2 !pl-4">{prod.name}</td>
+                  <td className="py-2 !pl-4">
+                    {prod.name && prod.name.length >= 12
+                      ? `${prod.name.substring(0, 12)}...`
+                      : `${prod.name}`}
+                  </td>
                   <td>
                     {showMore[prod.id] ? (
                       <div
@@ -128,7 +132,7 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
                       <div
                         className="rendered-content"
                         dangerouslySetInnerHTML={{
-                          __html: prod.description.substring(0, 140),
+                          __html: prod.description.substring(0, 150),
                         }}
                       />
                     )}
@@ -165,12 +169,14 @@ export default function ManageProduct({ searchKeyword, handleSearch }) {
                     <Button
                       className="w-32 h-12 ml-5 mr-5"
                       variant="dark"
-                      onClick={() => prod.status === 1 ? navigate(`/chi-tiet-san-pham/${prod.id}`) : ""}
+                      onClick={() =>
+                        prod.status === 1
+                          ? navigate(`/chi-tiet-san-pham/${prod.id}`)
+                          : ""
+                      }
                     >
                       <div className="flex items-center">
-                        <span className="pl-2 w-full font-semibold">
-                          Xem
-                        </span>
+                        <span className="pl-2 w-full font-semibold">Xem</span>
                       </div>
                     </Button>
                     <ModalChangeStatusProd

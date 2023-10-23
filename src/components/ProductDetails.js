@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Apis, { authApi, endpoints } from "../configs/Apis";
-import { Button, Carousel, CarouselItem, FloatingLabel, Form, Image } from "react-bootstrap";
+import {
+  Button,
+  Carousel,
+  CarouselItem,
+  FloatingLabel,
+  Form,
+  Image,
+} from "react-bootstrap";
 import { useCart } from "../reducers/CartContext";
 import { toastError, toastSuccess } from "./Toast";
 import { ToastContainer } from "react-toastify";
@@ -31,12 +38,7 @@ export default function ProductDetails() {
   const [selectedImage, setSelectedImage] = useState(null); // State to track selected image
   const [showMore, setShowMore] = useState({});
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  // const groupSize = 4; // Số sản phẩm trên mỗi item
-  // const productGroups = [];
-  // for (let i = 0; i < productDetail.imageSet.length; i += groupSize) {
-  //   productGroups.push(productDetail.imageSet.slice(i, i + groupSize));
-  // }
-
+  const [isAdding, setIsAdding] = useState(false);
   const toggleShowMore = (prodId) => {
     setShowMore((prev) => ({
       ...prev,
@@ -51,22 +53,27 @@ export default function ProductDetails() {
   const changeBorderImage = (index) => {
     setSelectedImageIndex(index);
   };
-
+  
   const createReview = async () => {
+    if (isAdding) {
+      return;
+    }
+    setIsAdding(true);
     const formData = new FormData();
     formData.append("content", content);
     formData.append("imageUrl", image);
     formData.append("star", selectedstar);
     try {
       let res = await authApi().post(endpoints.create_review(id), formData);
-      console.log(res.data);
+      setIsAdding(false);
       if (res.data === "") {
         toastError("Vui lòng mua hàng trước khi đánh giá");
         return;
-      } else setReviews((prev) => [...prev, res.data]);
+      } else loadReviews();
       toastSuccess("Đã gửi đánh giá");
     } catch (error) {
       console.log(error);
+      setIsAdding(false);
       toastError("Có lỗi xảy ra");
     }
   };
@@ -139,8 +146,13 @@ export default function ProductDetails() {
 
   useEffect(() => {
     loadProductDetail();
+  }, []);
+
+  useEffect(() => {
     loadReviews();
   }, []);
+
+  console.log(productDetail);
 
   return (
     <div className="container-background mb-14">
@@ -276,13 +288,12 @@ export default function ProductDetails() {
                 Chat ngay
               </Button>
               <Button className="border px-3 !font-semibold" variant="light">
-                Xem shop
+                <Link to={`/shop/${productDetail.shop?.id}`} className="decoration-transparent !text-black">Xem shop</Link>
               </Button>
             </div>
           </div>
         </div>
       </div>
-
       <div className="container bg-white h-auto mt-5 shadow-md">
         <div className="w-full h-full p-3 ">
           <h3 className="m-3 p-3 bg-gray-100 font-semibold">
@@ -325,6 +336,7 @@ export default function ProductDetails() {
                 </label>
                 <Button
                   onClick={createReview}
+                  disabled={isAdding === true}
                   className="!bg-orange-500 !border-none !font-semibold"
                 >
                   Đánh giá
@@ -360,14 +372,16 @@ export default function ProductDetails() {
                       <div className="d-flex flex-start mb-4">
                         <img
                           className="rounded-circle shadow-1-strong me-3 w-1/12 !h-1/2"
-                          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp"
+                          src={review.user?.avatar}
                           alt="avatar"
                         />
 
                         <MDBCard className="w-full">
                           <MDBCardBody className="">
                             <div>
-                              <MDBTypography tag="h5">Johny Cash</MDBTypography>
+                              <MDBTypography tag="h5">
+                                {review.user?.fullName}
+                              </MDBTypography>
                               <div>
                                 {[1, 2, 3, 4, 5].map((star) => (
                                   <MDBIcon
@@ -383,7 +397,7 @@ export default function ProductDetails() {
                                 ))}
                               </div>
                               <p className="small mt-1">
-                                {formatTime(review.createTime)}
+                                {formatTime(review.createdTime)}
                               </p>
                               <p>{review.content}</p>
                               <div>

@@ -5,37 +5,35 @@ import { authApi, endpoints } from "../../../configs/Apis";
 import searchIcon from "../../../assets/image/search.png";
 import "../../../assets/CSS/Table.css";
 import PaginationItems from "../../PaginationItems";
-import ModalChangeStatus from "./ModalChangeStatus";
+import ModalCreateBanner from "./ModalCreateBanner";
+import ModalUpdateBanner from "./ModalUpdateBanner";
+import ModalDeleteBanner from "./ModalDeleteBanner";
 
-export default function ManageUser({ searchKeyword, handleSearch }) {
-  const [users, setUsers] = useState([]);
+export default function ManageBanner({ searchKeyword, handleSearch }) {
+  const [banners, setBanners] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
   const endIndex = startIndex + itemsPerPage; // Chỉ mục kết thúc
-  const loadUsers = async () => {
+  const loadBanners = async () => {
     try {
-      let res = await authApi().get(endpoints.user);
-      setUsers(res.data);
+      let res = await authApi().get(endpoints.banners);
+      setBanners(res.data);
       console.log(res.data);
     } catch (ex) {
       console.log(ex);
     }
   };
   useEffect(() => {
-    loadUsers();
+    loadBanners();
   }, []);
-  const justUser = users.filter(u =>  u.roleName === "ROLE_USER")
-  const paginationItem = justUser.slice(startIndex, endIndex);
-  const filteredItems = paginationItem.filter((item) =>
-    item.username.toLowerCase().includes(searchKeyword.toLowerCase())
-  );
   return (
     <>
       <ToastContainer />
       <div className=" h-full !mx-0">
         <div className="flex justify-between">
-          <h2 className="">Người dùng</h2>
+          <h2 className="">Banners</h2>
+          <ModalCreateBanner loadBanners={loadBanners} />
         </div>
         <div className="p-2 mt-2 shadow-md rounded-md">
           <div className="relative m-1 w-2/4 ">
@@ -58,38 +56,27 @@ export default function ManageUser({ searchKeyword, handleSearch }) {
             <thead className="">
               <tr className=" items-center ">
                 <th className="!p-3">ID</th>
-                <th className="!p-3">TÀI KHOẢN</th>
-                <th className="!p-3">EMAIL</th>
-                <th className="!p-3">SỐ ĐIỆN THOẠI</th>
-                <th className="!p-3">HỌ TÊN</th>
-                <th className="!p-3">TRẠNG THÁI</th>
+                <th className="!p-3">HÌNH ẢNH</th>
                 <th className="!p-3">CHỨC NĂNG</th>
               </tr>
             </thead>
             <tbody>
-              {filteredItems.map((u) => (
+              {banners.map((u) => (
                 <tr key={u.id}>
                   <td className="py-2 !pl-4">{u.id}</td>
-                  <td className="py-2 !pl-4">{u.username}</td>
-                  <td className="py-2 !pl-4">{u.email}</td>
-                  <td className="py-2 !pl-4">{u.phone}</td>
-                  <td className="py-2 !pl-4">{u.fullName}</td>
                   <td className="py-2 !pl-4">
-                    <div
-                      className={`${
-                        u.redFlag === 1
-                          ? `text-white text-center font-semibold rounded p-2 bg-red-500  w-3/4 `
-                          :  `text-white text-center font-semibold rounded p-2 bg-green-500  w-3/4`
-                      }`}
-                    >
-                      {u.redFlag === 1
-                        ? "Vi phạm"
-                        : u.redFlag === 0
-                        ? "Hoạt động" : ""}
-                    </div>
+                    <img className=" w-20 zoomable-image" src={u.imageUrl} />
                   </td>
                   <td className="py-2 !pl-4">
-                    <ModalChangeStatus userId={u.id} loadUsers={loadUsers}/>
+                    <ModalUpdateBanner
+                      bannerId={u.id}
+                      loadBanners={loadBanners}
+                      banner={u}
+                    />
+                    <ModalDeleteBanner
+                      bannerId={u.id}
+                      loadBanners={loadBanners}
+                    />
                   </td>
                 </tr>
               ))}
@@ -98,7 +85,7 @@ export default function ManageUser({ searchKeyword, handleSearch }) {
         </div>
         <div className="flex justify-center bg-white shadow-md border rounded-lg">
           <PaginationItems
-            array={users}
+            array={banners}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

@@ -24,10 +24,10 @@ export default function CustomNav({ nav }) {
           ) : null}
         </button>
       </Link>
-      <div className="absolute left-0 right-0">
+      <div style={{ left: '-52rem' }}  className="absolute -left-96 top-16">
         <ul
-          class="z-30 px-0 bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
-                                        transition duration-150 ease-in-out origin-top custom-nav-header"
+         style={{ width: '1500px' }}  class=" h-auto flex bg-white z-30 px-0  border rounded-sm transform scale-0 group-hover:scale-100 absolute 
+                                        transition duration-150 ease-in-out origin-top custom-nav-header flex-wrap"
         >
           {nav.parent
             ? nav.parent.map((nav) =>
@@ -42,7 +42,10 @@ export default function CustomNav({ nav }) {
 
 function LiNull({ nav }) {
   return (
-    <li onClick={nav.action} class="rounded-sm px-3 py-1 hover:bg-gray-100 ">
+    <li
+      onClick={nav.action}
+      class="w-1/6 h-12 py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-100 text-xs"
+    >
       <Link className="decoration-transparent text-black" to={nav.link}>
         {nav.navParentName}
       </Link>

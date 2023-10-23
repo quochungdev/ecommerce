@@ -19,7 +19,7 @@ export default function SearchPage() {
     <div className="">
       {searchData === "" ? (
         <div className="text-center">
-            <h2>Không tìm thấy sản phẩm</h2>
+          <h2>Không tìm thấy sản phẩm</h2>
         </div>
       ) : (
         <>
@@ -128,7 +128,12 @@ export default function SearchPage() {
                         className="border px-3 !font-semibold"
                         variant="light"
                       >
-                        Xem shop
+                        <Link
+                          to={`/shop/${searchData.shop.id}`}
+                          className="decoration-transparent !text-black"
+                        >
+                          Xem shop
+                        </Link>
                       </Button>
                     </div>
                   </div>

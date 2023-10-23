@@ -9,6 +9,7 @@ import ManageProduct from "../components/dashboard/Product/ManageProduct";
 import ManageUser from "../components/dashboard/User/ManageUser";
 import ManagePayment from "../components/dashboard/Payment/ManagePayment";
 import ManageVoucher from "../components/dashboard/Voucher/ManageVoucher";
+import ManageBanner from "../components/dashboard/Banner/ManageBanner";
 
 export default function AdminLayout({searchKeyword, handleSearch}) {
 
@@ -26,6 +27,7 @@ export default function AdminLayout({searchKeyword, handleSearch}) {
           <Route path="/users" element={<ManageUser searchKeyword={searchKeyword} handleSearch={handleSearch} />} />
           <Route path="/payments" element={<ManagePayment searchKeyword={searchKeyword} handleSearch={handleSearch} />} />
           <Route path="/vouchers" element={<ManageVoucher searchKeyword={searchKeyword} handleSearch={handleSearch} />} />
+          <Route path="/banner" element={<ManageBanner searchKeyword={searchKeyword} handleSearch={handleSearch} />} />
         </Routes>
         </div>
       </div>

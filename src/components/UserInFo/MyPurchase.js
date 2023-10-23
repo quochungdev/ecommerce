@@ -172,7 +172,7 @@ export default function MyPurchase() {
               <div className="flex font-semibold text-xl items-center">
                 <div className="">Thành tiền:</div>
                 <div className="text-red-500 px-2 text-3xl">
-                  ${order.order.total_amount}
+                  ${order.qty * order.product.price}
                 </div>
               </div>
             </div>

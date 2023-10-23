@@ -13,7 +13,6 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import { MyUserContext } from "../App";
 import searchIcon from "../assets/image/search.png";
-import heartIcon from "../assets/image/heart.svg";
 import "../assets/CSS/Header.css";
 import CustomNav from "../components/CustomNav";
 import { UserShopContext } from "../layouts/MainLayout";
@@ -59,16 +58,19 @@ const Header = ({ searchKeyword, handleSearch }) => {
     };
     loadCategories();
   }, []);
-
+  const categoriesMain = categories.filter((cate) => (cate.categoryId === null))
+  console.log(categoriesMain);
   const navCustom = [
     {
       id: 1,
       link: "/home",
+      isWidth: false,
       navName: "Trang chủ",
       parent: null,
     },
     {
       id: 2,
+      isWidth: false,
       link:
         user && user.roleName === "ROLE_ADMIN"
           ? "/admin"
@@ -85,9 +87,10 @@ const Header = ({ searchKeyword, handleSearch }) => {
     },
     {
       id: 3,
-      link: "/",
       navName: "Danh mục",
-      parent: categories.map((cate) => ({
+      isWidth: true,
+      parent: categoriesMain.map((cate) => ({
+        link: `/san-pham/${cate.id}`,
         navParentName: cate.name,
         children: null,
       })),
@@ -95,10 +98,11 @@ const Header = ({ searchKeyword, handleSearch }) => {
     {
       id: 4,
       link: user ? "" : "/dang-nhap",
+      isWidth: false,
       navName: user ? (
-        <div className="w-full flex">
-          <img className="w-1/5" src={user.avatar} alt={user.fullName} />
-          <span className="w-4/5">{user.fullName}</span>
+        <div className="w-full flex items-center">
+          <Image roundedCircle className="w-7" src={user.avatar} alt={user.fullName} />
+          <span className="w-4/6">{user.fullName}</span>
         </div>
       ) : (
         "Đăng nhập"
@@ -131,6 +135,7 @@ const Header = ({ searchKeyword, handleSearch }) => {
     {
       id: 5,
       link: "/dang-ky",
+      isWidth: false,
       navName: user ? `Đăng xuất` : "Đăng ký",
       parent: null,
     },
@@ -170,7 +175,10 @@ const Header = ({ searchKeyword, handleSearch }) => {
                     return user !== null ? nav.id !== 4 && nav.id !== 5 : true;
                   })
                   .map((nav) => (
-                    <CustomNav nav={nav} key={nav.id} />
+                    <CustomNav 
+                      nav={nav}
+                      key={nav.id}
+                    />
                   ))}
               </Nav>
             </div>
@@ -182,11 +190,7 @@ const Header = ({ searchKeyword, handleSearch }) => {
                   </>
                 ))}
                 <CartDropdown />
-                <Image
-                  className=" px-4 w-full h-full"
-                  to="/home"
-                  src={heartIcon}
-                />
+              
               </div>
             </div>
           </div>

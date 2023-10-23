@@ -43,7 +43,7 @@ export default function Overview() {
         <BarChartMonth />
         <BarChartQuarter />
       </div>
-      <div className="m-3 rounded-xl p-3 bg-white shadow-md chart-container w-1/2">
+      <div className="m-3 w-auto container rounded-xl p-3 bg-white shadow-md chart-container">
         <h4 className="text-center text-gray-400 font-bold">
           {`TỔNG DOANH THU SẢN PHẨM THEO THÁNG ${
             time ? `${time.$M + 1}/${time.$y}` : ""

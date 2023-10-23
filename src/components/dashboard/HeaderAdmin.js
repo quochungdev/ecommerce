@@ -21,9 +21,9 @@ export default function HeaderAdmin() {
             </Button>
           </Link>
         </div>
-        <div className="pr-4">
+        {/* <div className="pr-4">
           <NotificationDropdown />
-        </div>
+        </div> */}
         <div className="text-xl font-bold">{user.fullName}</div>
       </div>
     </div>

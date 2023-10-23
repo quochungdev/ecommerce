@@ -19,19 +19,37 @@ export default function SideNav() {
           <Nav className="flex flex-col px-4 py-3 h-full ">
             <div
               className={`flex mb-3 p-2 hover:bg-slate-600 ${
+                location.pathname === "/admin/category" ? "bg-slate-600  " : ""
+              }`}
+            >
+              <img className="bg-button_color w-auto" src={overvewIcon} />
+              <Link
+                className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
+                  location.pathname === "/admin/category"
+                    ? "text-white !font-bold"
+                    : ""
+                } `}
+                to="/admin/category"
+              >
+                Tổng quan
+              </Link>
+            </div>
+
+            <div
+              className={`flex mb-3 p-2 hover:bg-slate-600 ${
                 location.pathname === "/admin/overview" ? "bg-slate-600  " : ""
               }`}
             >
               <img className="bg-button_color w-auto" src={overvewIcon} />
               <Link
                 className={`decoration-transparent pl-4 text-gray-400 font-semibold  text-xl  ${
-                  location.pathname === "/admin/overview"
+                  location.pathname === "/admin/banner"
                     ? "text-white !font-bold"
                     : ""
                 } `}
-                to="/admin/overview"
+                to="/admin/banner"
               >
-                Tổng quan
+                Banner
               </Link>
             </div>
 
