@@ -33,7 +33,7 @@ export default function Products() {
   }, []);
 
   const productsByCategory = products.filter(
-    (product) => product.category.id == id
+    (product) => product.category.category_id == id
   );
   console.log(products);
   console.log(id);
@@ -176,9 +176,10 @@ export default function Products() {
           </Form>
           <hr className="mx-2" />
         </div>
+        
       </div>
       {/* Danh sách sản phẩm theo category */}
-      <div className=" shadow-md w-5/6 h-auto ml-5">
+      <div className="shadow-md w-5/6 h-auto ml-5">
         <ul className="w-full h-full !px-0 flex flex-row flex-wrap">
           {productsByCategory.map((product) => (
             <Link
@@ -188,14 +189,20 @@ export default function Products() {
             >
               <Card className="items-start">
                 <Card.Img
-                  className="w-full"
+                  className="!w-full h-52"
                   variant="top"
                   src={product.thumbnail}
                 />
-                <Card.Body className="">
-                  <Card.Title>{product.name}</Card.Title>
+                <Card.Body className="h-36">
+                  <Card.Title>
+                    {product.name && product.name.length >= 12
+                      ? `${product.name.substring(0, 12)}...`
+                      : `${product.name}`}
+                  </Card.Title>
                   <Card.Text>{product.category.name}</Card.Text>
-                  <Card.Text>{product.price}</Card.Text>
+                  <Card.Text className="text-red-500 font-semibold">
+                    ${product.price}
+                  </Card.Text>
                 </Card.Body>
               </Card>
             </Link>

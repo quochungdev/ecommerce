@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import { Button, Card, Form, Image } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Form, FormLabel, Image } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import PaginationItems from "./PaginationItems";
+import Apis, { endpoints } from "../configs/Apis";
 
 export default function SearchPage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchData = location.state?.searchData;
   const keyword = searchParams.get("keyword");
+  console.log(searchData);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
   const endIndex = startIndex + itemsPerPage; // Chỉ mục kết thúc
   const paginationItem = searchData.products?.slice(startIndex, endIndex);
-  console.log(searchData);
   return (
     <div className="">
       {searchData === "" ? (
@@ -30,66 +31,123 @@ export default function SearchPage() {
           <div className="mt-5 mb-50 container !px-0 h-auto flex ">
             {/* Danh mục và Bộ lọc tìm kiếm */}
             <div className="bg-white w-1/6 h-auto p-3">
-              <div className="bg-white h-auto">
-                <h3>Danh mục con</h3>
-                <div className="w-full my-4">
-                  <Link className="w-full block decoration-transparent">
-                    Áo khoác
-                  </Link>
-                  <Link className="w-full block decoration-transparent">
-                    Áo khoác
-                  </Link>
-                  <Link className="w-full block decoration-transparent">
-                    Áo khoác
-                  </Link>
-                  <Link className="w-full block decoration-transparent">
-                    Áo khoác
-                  </Link>
-                </div>
-              </div>
               <h4 className="my-3">Bộ lộc tìm kiếm</h4>
               <div>
                 <Form>
+                  <FormLabel className="font-semibold text-gray-500">
+                    Nơi bán
+                  </FormLabel>
                   {["checkbox"].map((type) => (
-                    <div key={`default-${type}`} className="mb-3">
-                      <Form.Check // prettier-ignore
+                    <div key={`default-${type}`} className="mb-3 py-2">
+                      <Form.Check
                         type={type}
+                        className="py-1"
                         id={`default-${type}`}
-                        label="Nhãn hàng 1"
+                        label="TPHCM"
                       />
-                      <Form.Check // prettier-ignore
+                      <Form.Check
                         type={type}
+                        className="py-1"
                         id={`default-${type}`}
-                        label="Nhãn hàng 1"
+                        label="Hà Nội"
                       />
-                      <Form.Check // prettier-ignore
+                      <Form.Check
                         type={type}
+                        className="py-1"
                         id={`default-${type}`}
-                        label="Nhãn hàng 1"
+                        label="Quận 1"
+                      />
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Quận 2"
+                      />
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Quận 3"
+                      />
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Quận 4"
+                      />
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Quận 5"
+                      />
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Quận 6"
                       />
                     </div>
                   ))}
                 </Form>
                 <hr className="mx-2" />
               </div>
+
               <div>
                 <Form>
+                  <FormLabel className="font-semibold text-gray-500">
+                    Đơn vị vận chuyển
+                  </FormLabel>
                   {["checkbox"].map((type) => (
                     <div key={`default-${type}`} className="mb-3">
-                      <Form.Check // prettier-ignore
+                      <Form.Check
                         type={type}
+                        className="py-1"
                         id={`default-${type}`}
-                        label="Nhãn hàng 1"
+                        label="Hỏa tốc"
                       />
-                      <Form.Check // prettier-ignore
+                      <Form.Check
                         type={type}
+                        className="py-1"
                         id={`default-${type}`}
-                        label="Nhãn hàng 1"
+                        label="Nhanh"
                       />
-                      <Form.Check // prettier-ignore
+                      <Form.Check
                         type={type}
+                        className="py-1"
                         id={`default-${type}`}
-                        label="Nhãn hàng 1"
+                        label="Tiết Kiệm"
+                      />
+                    </div>
+                  ))}
+                </Form>
+                <hr className="mx-2" />
+              </div>
+
+              <div>
+                <Form>
+                  <FormLabel className="font-semibold text-gray-500">
+                    Thương Hiệu
+                  </FormLabel>
+                  {["checkbox"].map((type) => (
+                    <div key={`default-${type}`} className="mb-3">
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Adidas"
+                      />
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Guci"
+                      />
+                      <Form.Check
+                        type={type}
+                        className="py-1"
+                        id={`default-${type}`}
+                        label="Padas"
                       />
                     </div>
                   ))}
@@ -97,6 +155,7 @@ export default function SearchPage() {
                 <hr className="mx-2" />
               </div>
             </div>
+
             {/* Danh sách sản phẩm theo product */}
             <div className=" shadow-md w-5/6 h-auto ml-5">
               {/* Cửa hàng theo product */}
@@ -129,7 +188,7 @@ export default function SearchPage() {
                         variant="light"
                       >
                         <Link
-                          to={`/shop/${searchData.shop.id}`}
+                          to={`/shop/${searchData.shop?.id}`}
                           className="decoration-transparent !text-black"
                         >
                           Xem shop
@@ -168,7 +227,7 @@ export default function SearchPage() {
                   </Link>
                 ))}
               </ul>
-              <div className="flex justify-center ">
+              <div className="flex justify-center text-center">
                 <PaginationItems
                   array={searchData.products}
                   itemsPerPage={itemsPerPage}

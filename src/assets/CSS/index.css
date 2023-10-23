@@ -27,7 +27,10 @@
 }
 [aria-label] {
   background-color: transparent !important;
+}
 
+.MuiPickersMonth-monthButton {
+  color: black !important;
 }
 
 body {

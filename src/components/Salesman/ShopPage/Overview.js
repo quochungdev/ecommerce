@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { formatTime } from "../../../configs/formatTime";
 import PaginationItems from "../../PaginationItems";
 import { BarChartQuarter } from "./BarChartQuarter";
+import '../../../assets/CSS/index.css'
 
 export default function Overview() {
   const [stats, setStats] = useState([]);

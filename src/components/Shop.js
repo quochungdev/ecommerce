@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Image } from "react-bootstrap";
+import { Button, Card, Form, FormLabel, Image } from "react-bootstrap";
 import Apis, { endpoints } from "../configs/Apis";
 import { Link, useParams } from "react-router-dom";
 
@@ -30,6 +30,7 @@ export default function Shop() {
             Thông tin cửa hàng
           </h2>
         </div>
+
         <div className="container flex items-center bg-white pb-5">
           <div className="w-1/12">
             <Image
@@ -40,7 +41,13 @@ export default function Shop() {
             />
           </div>
           <div className="w-11/12 text-xl font-bold text-red-500">
-            {shopOfProducts && shopOfProducts.shop.name}
+            <div className="">
+              <div>{shopOfProducts && shopOfProducts.shop.name}</div>
+              <div>
+                <span className="!text-black">Tổng sản phẩm: </span>
+                <span>{prodShop.length}</span>
+              </div>
+            </div>
             <div className="mt-2">
               <Button
                 className="mr-2 border px-3 !font-semibold"
@@ -52,8 +59,134 @@ export default function Shop() {
           </div>
         </div>
 
-        <div className="bg-white mt-5 container">
-          <ul className="w-auto h-auto !px-0 flex flex-row flex-wrap">
+        <div className="mt-5 mb-50 container !px-0 h-auto flex">
+          <div className="bg-white w-1/6 h-auto p-3">
+            <h4 className="my-3">Bộ lộc tìm kiếm</h4>
+            <div>
+              <Form>
+                <FormLabel className="font-semibold text-gray-500">
+                  Nơi bán
+                </FormLabel>
+                {["checkbox"].map((type) => (
+                  <div key={`default-${type}`} className="mb-3 py-2">
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="TPHCM"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Hà Nội"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Quận 1"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Quận 2"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Quận 3"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Quận 4"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Quận 5"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Quận 6"
+                    />
+                  </div>
+                ))}
+              </Form>
+              <hr className="mx-2" />
+            </div>
+
+            <div>
+              <Form>
+                <FormLabel className="font-semibold text-gray-500">
+                  Đơn vị vận chuyển
+                </FormLabel>
+                {["checkbox"].map((type) => (
+                  <div key={`default-${type}`} className="mb-3">
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Hỏa tốc"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Nhanh"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Tiết Kiệm"
+                    />
+                  </div>
+                ))}
+              </Form>
+              <hr className="mx-2" />
+            </div>
+
+            <div>
+              <Form>
+                <FormLabel className="font-semibold text-gray-500">
+                  Thương Hiệu
+                </FormLabel>
+                {["checkbox"].map((type) => (
+                  <div key={`default-${type}`} className="mb-3">
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Adidas"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Guci"
+                    />
+                    <Form.Check
+                      type={type}
+                      className="py-1"
+                      id={`default-${type}`}
+                      label="Padas"
+                    />
+                  </div>
+                ))}
+              </Form>
+              <hr className="mx-2" />
+            </div>
+          </div>
+
+          <ul className="bg-white mx-3 w-5/6 h-auto !px-0 flex flex-row flex-wrap">
             {prodShop?.map((product) => (
               <Link
                 to={`/chi-tiet-san-pham/${product.id}`} // Điều hướng đến trang chi tiết sản phẩm
