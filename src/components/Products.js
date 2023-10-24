@@ -26,17 +26,18 @@ export default function Products() {
       console.log(ex);
     }
   };
+  const products_noDelete = products.filter(
+    (p) => p.isDeleted === 0 && p.status === 1
+  );
 
   useEffect(() => {
     loadProducts();
     loadCategories();
   }, []);
 
-  const productsByCategory = products.filter(
+  const productsByCategory = products_noDelete.filter(
     (product) => product.category.category_id == id
   );
-  console.log(products);
-  console.log(id);
 
   const subCategory = categories.filter((cate) => cate.categoryId?.id == id);
   return (
@@ -176,7 +177,6 @@ export default function Products() {
           </Form>
           <hr className="mx-2" />
         </div>
-        
       </div>
       {/* Danh sách sản phẩm theo category */}
       <div className="shadow-md w-5/6 h-auto ml-5">

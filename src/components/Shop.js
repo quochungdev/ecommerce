@@ -17,7 +17,9 @@ export default function Shop() {
   useEffect(() => {
     loadShopProducts();
   }, []);
-  const prodShop = products.filter((s) => s.shop.id == shopId);
+  const products_noDelete = products.filter((p) => p.isDeleted === 0);
+
+  const prodShop = products_noDelete.filter((s) => s.shop.id == shopId);
   const shopOfProducts = prodShop?.find((s) => s.shop);
   const shopCustom = {
     name: "Shop name",
@@ -31,8 +33,8 @@ export default function Shop() {
           </h2>
         </div>
 
-        <div className="container flex items-center bg-white pb-5">
-          <div className="w-1/12">
+        <div className="container  flex items-center bg-white pb-5">
+          <div className="w-1/12 mt-3">
             <Image
               className=""
               alt="Chưa có hình ảnh"
@@ -40,7 +42,7 @@ export default function Shop() {
               src={shopOfProducts && shopOfProducts.shop.imageUrl}
             />
           </div>
-          <div className="w-11/12 text-xl font-bold text-red-500">
+          <div className="w-11/12 mx-3 mt-3 text-xl font-bold text-red-500">
             <div className="">
               <div>{shopOfProducts && shopOfProducts.shop.name}</div>
               <div>
@@ -195,11 +197,11 @@ export default function Shop() {
               >
                 <Card className="items-start transition-all duration-200 hover:!bg-gray-300 hover:border hover:border-solid hover:!border-red-500 hover:shadow-lg">
                   <Card.Img
-                    className="w-full3"
+                    className="!w-full h-52"
                     variant="top"
                     src={product.thumbnail}
                   />
-                  <Card.Body className="">
+                  <Card.Body className="h-36">
                     <Card.Title>
                       {product.name && product.name.length >= 12
                         ? `${product.name.substring(0, 12)}...`

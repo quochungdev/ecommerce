@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import { Button, Form, Table } from "react-bootstrap";
 import UpdateProductComp from "./UpdateProductComp";
 import PaginationItems from "../../PaginationItems";
+import DeleteProductComp from "./DeleteProductComp";
 
 export default function ProductByShop({ searchKeyword, handleSearch }) {
   const [products, setProducts] = useState([]);
@@ -20,6 +21,8 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
       console.log(ex);
     }
   };
+  const products_noDelete = products.filter((p) => p.isDeleted === 0);
+
   useEffect(() => {
     loadProducts();
   }, [status]);
@@ -35,7 +38,7 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
   const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
   const endIndex = startIndex + itemsPerPage; // Chỉ mục kết thúc
-  const paginationItem = products.slice(startIndex, endIndex);
+  const paginationItem = products_noDelete.slice(startIndex, endIndex);
   const filteredItems = paginationItem.filter((item) =>
     item.name.toLowerCase().includes(searchKeyword.toLowerCase())
   );
@@ -117,14 +120,14 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
                     <td className="py-2 !pl-4">{prod.id}</td>
                     <td className="py-2 !pl-4">
                       {showMore[prod.id]
-                        ? `${prod.name.substring(0, 18)}...`
-                        : `${prod.name}`}
-                      {prod.name && prod.name?.length > 18 && (
+                        ? `${prod.name}`
+                        : `${prod.name.substring(0, 18)}...`}
+                      {prod.name?.length > 18 && (
                         <a
                           className="decoration-emerald-500 pl-5"
                           onClick={() => toggleShowMore(prod.id)}
                         >
-                          {showMore[prod.id] ? "Xem thêm" : "Thu gọn"}
+                          {showMore[prod.id] ? "Thu gọn" : "Xem thêm"}
                         </a>
                       )}
                     </td>
@@ -161,7 +164,11 @@ export default function ProductByShop({ searchKeyword, handleSearch }) {
                         loadProducts={loadProducts}
                       />
 
-                      {/* <ModalDeleteCategory categoryId={cate.id} /> */}
+                      <DeleteProductComp
+                        productId={prod.id}
+                        loadProducts={loadProducts}
+                        setProducts={setProducts}
+                      />
                     </td>
                   </tr>
                 ))}

@@ -20,7 +20,6 @@ export const BarChartMonth = () => {
         formData
       );
       setStats(res.data);
-      console.log(res.data);
     } catch (ex) {
       console.log(ex);
     }

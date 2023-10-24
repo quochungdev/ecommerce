@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./pages/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/Login";
@@ -27,10 +27,13 @@ function App() {
     setSearchKeyword(e.target.value);
   };
 
+
   return (
     <MyUserContext.Provider value={[user, dispatch]}>
       <BrowserRouter>
         <Routes>
+          {/* Sử dụng MainLayout cho các trang user */}
+
           <Route
             path="/*"
             element={
@@ -40,15 +43,21 @@ function App() {
               />
             }
           />
-          <Route
-            path="/admin/*"
-            element={
-              <AdminLayout
-                searchKeyword={searchKeyword}
-                handleSearch={handleSearch}
-              />
-            }
-          />
+          {/* Sử dụng AdminLayout cho các trang admin */}
+          {user && user.roleName === "ROLE_ADMIN" ? (
+            <Route
+              path="/admin/*"
+              element={
+                <AdminLayout
+                  searchKeyword={searchKeyword}
+                  handleSearch={handleSearch}
+                />
+              }
+            />
+          ) : (
+            // Chuyển hướng người dùng đến '/home' nếu không phải admin
+            <Route path="/*" element={<Navigate to="/home" replace />} />
+          )}
         </Routes>
       </BrowserRouter>
     </MyUserContext.Provider>

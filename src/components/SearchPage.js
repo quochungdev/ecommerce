@@ -9,13 +9,12 @@ export default function SearchPage() {
   const searchParams = new URLSearchParams(location.search);
   const searchData = location.state?.searchData;
   const keyword = searchParams.get("keyword");
-  console.log(searchData);
-
+  const products_noDelete = searchData.products?.filter((p) => p.isDeleted === 0 && p.status === 1);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
   const endIndex = startIndex + itemsPerPage; // Chỉ mục kết thúc
-  const paginationItem = searchData.products?.slice(startIndex, endIndex);
+  const paginationItem = products_noDelete.slice(startIndex, endIndex);
   return (
     <div className="">
       {searchData === "" ? (

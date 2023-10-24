@@ -13,9 +13,10 @@ export default function ProductHome() {
     };
     loadProducts();
   }, []);
-
+  const products_noDelete = products.filter((p) => p.isDeleted === 0 && p.status === 1);
+  
   // Chia danh sách thành các phần con chứa tối đa 12 mục
-  const chunkedProducts = products.reduce((resultArray, item, index) => {
+  const chunkedProducts = products_noDelete.reduce((resultArray, item, index) => {
     const chunkIndex = Math.floor(index / 12);
 
     if (!resultArray[chunkIndex]) {

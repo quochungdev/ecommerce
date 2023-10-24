@@ -35,6 +35,7 @@ export const endpoints = {
     "view_detail": (productId) => `/api/view-detail/${productId}/`,
     "create_product":  `/api/shop/create_product/`,
     "update_product": (productId) => `/api/shop/update_product/${productId}/`,
+    "delete_product": (productId) => `/api/shop/delete_product/${productId}/`,
 
     "vouchers":  `/api/vouchers/`,
     "create_voucher": `/api/admin/create_voucher/`,
