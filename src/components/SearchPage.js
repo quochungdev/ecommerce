@@ -14,7 +14,7 @@ export default function SearchPage() {
   const itemsPerPage = 15;
   const startIndex = (currentPage - 1) * itemsPerPage; // Chỉ mục bắt đầu
   const endIndex = startIndex + itemsPerPage; // Chỉ mục kết thúc
-  const paginationItem = products_noDelete.slice(startIndex, endIndex);
+  const paginationItem = products_noDelete?.slice(startIndex, endIndex);
   return (
     <div className="">
       {searchData === "" ? (
