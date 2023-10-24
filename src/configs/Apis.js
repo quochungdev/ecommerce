@@ -2,7 +2,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 
-const SERVER = "http://localhost:8083";
+const SERVER = "http://localhost:8080";
 
 export const endpoints = {
     "signin": `/api/signin/`,
